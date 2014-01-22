@@ -73,34 +73,27 @@ class CoffeePot:
             adcout >>= 1       # first bit is 'null' so drop it
             return adcout
     
-coffee_pot_left = CoffeePot("Left", 0, 5)
-coffee_pot_right = CoffeePot("Right", 1, 5)
+coffee_pot_list = []
 
-# read SPI data from MCP3008 chip, 8 possible adc's (0 thru 7)
-
-
-# change these as desired - they're the pins connected from the
-# SPI port on the ADC to the Cobbler
+coffee_pot_list.append(CoffeePot("Left", 0, 5))
+coffee_pot_list.append(CoffeePot("Right", 1, 5))
 
 
-# 10k trim pot connected to adc #0
-
-#last_read = 0       # this keeps track of the last potentiometer value
-#tolerance = 5       # to keep from being jittery we'll only change
-                    # volume when the pot has moved more than 5 'counts'
-
-while True:
-        # we'll assume that the pot didn't move
-
-        # read the analog pin
-        left_weight = coffee_pot_left.getWeight()
-        right_weight = coffee_pot_right.getWeight()
+def getWeights():
+    coffee_weight_dict = {}
+    for coffee_pot in coffee_pot_list:
+        coffee_weight_dict[coffee_pot.name] = coffee_pot.getWeight()
+    return coffee_weight_dict
 
 
-        if DEBUG:
-                print "Coffee Pot: " + coffee_pot_left.name + " weighs" + str(coffee_pot_left.getWeight())
-                print "Coffee Pot: " + coffee_pot_right.name + " weighs" + str(coffee_pot_right.getWeight())
+if __name__ == "__main__":
+    while True:
+            # we'll assume that the pot didn't move
+
+            if DEBUG:
+                for coffee_pot in coffee_pot_list:
+                    print "Coffee Pot: " + coffee_pot.name + " weighs " + str(coffee_pot.getWeight())
 
 
-        # hang out and do nothing for a half second
-        time.sleep(0.5)
+            # hang out and do nothing for a half second
+            time.sleep(0.5)
