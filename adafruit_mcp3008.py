@@ -93,7 +93,8 @@ if __name__ == "__main__":
             if DEBUG:
                 for coffee_pot in coffee_pot_list:
                     print "Coffee Pot: " + coffee_pot.name + " weighs " + str(coffee_pot.getWeight())
-
+                print getWeights()
+                    
 
             # hang out and do nothing for a half second
             time.sleep(0.5)
