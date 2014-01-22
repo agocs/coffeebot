@@ -12,19 +12,27 @@ SPIMISO = 23
 SPIMOSI = 24
 SPICS = 25
 
-class CoffeePot(self,name, adcnum, tolerance):
-    self.adcnum = adcnum
-    self.sensor_changed = 0
-    self.last_read = 0
-    self.tolerance = tolerance
-    self.name = name
+# set up the SPI interface pins
+GPIO.setup(SPIMOSI, GPIO.OUT)
+GPIO.setup(SPIMISO, GPIO.IN)
+GPIO.setup(SPICLK, GPIO.OUT)
+GPIO.setup(SPICS, GPIO.OUT)
+
+class CoffeePot:
+    def __init__(self, name, adcnum, tolerance):
+        self.name = name
+        self.adcnum = adcnum
+        self.tolerance = tolerance
+        self.sensor_changed = 0
+        self.last_read = 0
+
     #Pretty function to run readadc
     def __str__(self):
         return self.name
     
     def getWeight(self):
-        current_read = self.readadc(adcnum, SPICLK, SPIMISO, SPIMOSI, SPICS)
-        if abs(current_read - last_read) > tolerance:
+        current_read = self.readadc(self.adcnum, SPICLK, SPIMOSI, SPIMISO, SPICS)
+        if abs(current_read - self.last_read) > self.tolerance:
             self.last_read = current_read
         return self.last_read
     
@@ -73,16 +81,7 @@ coffee_pot_right = CoffeePot("Right", 1, 5)
 
 # change these as desired - they're the pins connected from the
 # SPI port on the ADC to the Cobbler
-SPICLK = 18
-SPIMISO = 23
-SPIMOSI = 24
-SPICS = 25
 
-# set up the SPI interface pins
-GPIO.setup(SPIMOSI, GPIO.OUT)
-GPIO.setup(SPIMISO, GPIO.IN)
-GPIO.setup(SPICLK, GPIO.OUT)
-GPIO.setup(SPICS, GPIO.OUT)
 
 # 10k trim pot connected to adc #0
 
@@ -99,8 +98,8 @@ while True:
 
 
         if DEBUG:
-                print "Coffee Pot: " + coffee_pot_left + " weighs" + coffee_pot_left.getWeight() 
-                print "Coffee Pot: " + coffee_pot_right + " weighs" + coffee_pot_right.getWeight() 
+                print "Coffee Pot: " + coffee_pot_left.name + " weighs" + str(coffee_pot_left.getWeight())
+                print "Coffee Pot: " + coffee_pot_right.name + " weighs" + str(coffee_pot_right.getWeight())
 
 
         # hang out and do nothing for a half second
