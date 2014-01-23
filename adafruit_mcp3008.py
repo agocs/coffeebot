@@ -75,8 +75,8 @@ class CoffeeWeight:
     
 coffee_pot_list = []
 
-coffee_pot_list.append(CoffeePot("0", 0, 5))
-coffee_pot_list.append(CoffeePot("1", 1, 5))
+coffee_pot_list.append(CoffeeWeight("0", 0, 5))
+coffee_pot_list.append(CoffeeWeight("1", 1, 5))
 
 
 def getWeights():
