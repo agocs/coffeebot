@@ -14,7 +14,7 @@ class Serial_LCD:
 		if self.lcd.isOpen():
 			self.lcd.write(chr(32) * 32)
 			self.lcd.write(chr(12))
-			self.lcd.write(chr(18))
+			self.lcd.write(chr(17))
 			time.sleep(1)
 			self.lcd.write(chr(128))
 			self.lcd.write(self.program)
@@ -27,7 +27,7 @@ class Serial_LCD:
 		# LINE2:    000%||000%	
 
 		message = "<-00:00||00:00->"
-		message += "  000%||000%   "
+		message += "   000%||000%   "
 
 		self.lcd.write(chr(128))
 		self.lcd.write(message)
