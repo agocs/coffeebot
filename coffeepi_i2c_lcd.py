@@ -1,12 +1,20 @@
 #!/usr/bin/env python
-import time
-import smbus
+import adafruit_lcdbackpack
 
 # This is a controller for displaying data on an LCD via I2C
 
-# THIS ADDRESS WILL PROBABLY BE WRONG AND NEEDS TO BE CHANGED; USE I2CDETECT TO GET THIS DETAIL
-bus = smbus.SMBus(0)
-address = 0x60
 
 class I2C_LCD:
-	def __init__(self)
+	def __init__(self, bus, address):
+		initLcd(self, bus, address)
+
+	def initLcd(self, bus, address):
+		self.lcd = Adafruit_CharLCDBackpack(bus, address, false)
+		self.lcd.begin(16,2)
+		self.lcd.clear()
+		self.lcd.display()
+
+
+
+	def writeLcd(self, message):
+		self.lcd.message(message)
