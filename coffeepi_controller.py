@@ -69,7 +69,7 @@ while True:
         url = 'http://coffeemonitor-backstopcoffee.rhcloud.com/pots/update'
         params = json.JSONEncoder().encode(to_post)
         headers ={'Content-type': "application/json"}
-        req = urllib2.Rquest(url, params, headers)
+        req = urllib2.Request(url, params, headers)
 
         try: 
             response = urllib2.urlopen(req).read()
