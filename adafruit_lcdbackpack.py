@@ -65,7 +65,7 @@ class Adafruit_CharLCDBackpack(Adafruit_I2C):
     # ----------------------------------------------------------------------
     # Constructor
 
-    def __init__(self, busnum=-1, addr=0x20, debug=False):
+    def __init__(self, busnum=1, addr=0x20, debug=False):
         self.i2c = Adafruit_I2C(addr, busnum, debug)
 
         # I2C is relatively slow.  MCP output port states are cached
