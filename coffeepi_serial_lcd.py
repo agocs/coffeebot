@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-from datetime import datetime, date, time
+import datetime
+import time
 import serial
 
 
@@ -38,12 +39,12 @@ class Serial_LCD:
 		#message format will be as follows:
 		# LINE1: <-00:00||00:00->		*NOTE: IF timespan > 24 hours 00:00 = OLD!!
 		# LINE2:    000%||000%	
-		now = datetime.now()
+		now = time.time()
 
 		pot1 = data["0"]
 		p1last = pot1["lastBrew"]
 		p1delta = now - p1last
-		m1, s1 = divmod(p1delta.seconds, 60)
+		m1, s1 = divmod(p1delta, 60)
 		h1, m1 = divmod(m1, 60)
 
 		if h1 > 24:
@@ -56,7 +57,7 @@ class Serial_LCD:
 		pot2 = data["1"]
 		p2last = pot2["lastBrew"]
 		p2delta = now - p2last
-		m2, s2 = divmod(p2delta.seconds, 60)
+		m2, s2 = divmod(p2delta, 60)
 		h2, m2 = divmod(m2, 60)
 
 		if h2 > 24:
