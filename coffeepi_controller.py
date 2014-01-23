@@ -43,7 +43,7 @@ right = coffee_pot("2")
 
 
 
-count = 0
+count = 1
 while True:
 
     
@@ -85,7 +85,7 @@ while True:
         print "tried to send request"
         
         
-        count = 0
+        count = 1
         
     
     count = count + 1
