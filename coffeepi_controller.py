@@ -20,7 +20,7 @@ class coffee_pot:
     def __init__(self, name, full=400, empty=50, off=20, max=500.00):
         self.name = name
         self.values = [0,0,0,0,0,0,0,0,0,0]
-        self.lastbrew = 0
+        self.lastbrew = time.time()
         self.current_level = 0
         self.removed = False
         self.full = full
@@ -59,8 +59,8 @@ class coffee_pot:
         return self.postvalue
 
         
-left = coffee_pot("1", full=130, empty = 61, off=10, max=130) 
-right = coffee_pot("2", full=60, empty = 30, off = 10, max=60)     
+left = coffee_pot("1", full=100, empty = 61, off=10, max=100) 
+right = coffee_pot("2", full=50, empty = 30, off = 10, max=50)     
 
 
 
