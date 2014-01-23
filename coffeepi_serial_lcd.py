@@ -2,6 +2,7 @@
 import datetime
 import serial
 import time
+import date
 
 class Serial_LCD:
 	def __init__(self, port, speed, program):
