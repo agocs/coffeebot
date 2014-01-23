@@ -35,10 +35,10 @@ class coffee_pot:
         if value > self.full and self.removed:
             self.lastbrew = time.time()
         self.removed = temp_current_level < self.off
-        self.post_value = temp_current_level / self.max
+        self.post_value = (temp_current_level - self.empty) / (self.max - self.empty)
         
-left = coffee_pot("1") 
-right = coffee_pot("2")      
+left = coffee_pot("1", full=90, empty = 71, off=10, max=90) 
+right = coffee_pot("2", full=45, empty = 35, off = 10, max=45)     
 
 
 
