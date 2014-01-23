@@ -38,13 +38,14 @@ class coffee_pot:
             self.lastbrew = time.time()
         self.removed = temp_current_level < self.off
 
-        # sumbitches = min(temp_current_level / self.full, 1)
-        # sumbitches = max(sumbitches, 0)
+        sumbitches = min(temp_current_level / self.full, 1)
+        sumbitches = max(sumbitches, 0)
 
-        thiscurrentvalue = min(temp_current_level, self.full)
-        thiscurrentvalue = max(thiscurrentvalue, self.empty)
+        # thiscurrentvalue = min(temp_current_level, self.full)
+        # thiscurrentvalue = max(thiscurrentvalue, self.empty)
 
-        self.post_value = (thiscurrentvalue - self.empty) / (self.full-self.empty)
+        # self.post_value = (thiscurrentvalue - self.empty) / (self.full - self.empty)
+        self.post_value = sumbitches
         
 left = coffee_pot("1", full=90, empty = 71, off=10, max=90) 
 right = coffee_pot("2", full=45, empty = 35, off = 10, max=45)     
