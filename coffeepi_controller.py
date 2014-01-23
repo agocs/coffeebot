@@ -13,7 +13,7 @@ import adafruit_mcp3008
 
 coffee_pots={}
 
-minimum_valid_data = 20
+minimum_valid_data = 5
 maximum_valid_data = 700
 
 class coffee_pot:
