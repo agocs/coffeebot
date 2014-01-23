@@ -52,6 +52,10 @@ class coffee_pot:
 
         # self.postvalue = (self.full - self.empty) / (temp_current_level-self.empty)
         self.postvalue = float((float(temp_current_level - self.empty)) / (float(self.full - self.empty)))
+
+        self.postvalue = min(self.postvalue, 1)
+        self.postvalue = max(self.postvalue, 0)
+
         return self.postvalue
 
         
