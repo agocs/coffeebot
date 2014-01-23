@@ -29,5 +29,5 @@ class Serial_LCD:
 		message = "<-00:00||00:00->"
 		message += "  000%||000%   "
 
-		self.lcd.write(chr(148))
+		self.lcd.write(chr(128))
 		self.lcd.write(message)
