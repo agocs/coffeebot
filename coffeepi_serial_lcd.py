@@ -22,17 +22,12 @@ class Serial_LCD:
 
 	def writeToLcd(self, data):
 		#message += chr(32) * (16 - len(message))
+		#message format will be as follows:
+		# LINE1: <-00:00||00:00->		*NOTE: IF timespan > 24 hours 00:00 = OLD!!
+		# LINE2:    000%||000%	
+
+		message = "<-00:00||00:00->"
+		message += "  000%||000%   "
+
 		self.lcd.write(chr(148))
-		if data["pot"] == "1":
-			message = "<-- "
-		else:
-			message = "--> "
-
-		message += "Brew: " + data["lastBrew"]
-		self.lcd.write(message)
-
-		#On bottom line, display current level
-		self.lcd.write()
-		message = "Current: " + data["currentLevel"]
-
 		self.lcd.write(message)
