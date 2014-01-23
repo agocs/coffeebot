@@ -41,7 +41,7 @@ class Serial_LCD:
 		# LINE2:    000%||000%	
 		now = time.time()
 
-		pot1 = data["0"]
+		pot1 = data[0]
 		p1last = pot1["lastBrew"]
 		p1delta = now - p1last
 		m1, s1 = divmod(p1delta, 60)
@@ -54,7 +54,7 @@ class Serial_LCD:
 
 		p1level = str(pot1["currentLevel"]*100)[:4] + '%'
 
-		pot2 = data["1"]
+		pot2 = data[1]
 		p2last = pot2["lastBrew"]
 		p2delta = now - p2last
 		m2, s2 = divmod(p2delta, 60)
