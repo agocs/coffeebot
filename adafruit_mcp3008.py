@@ -18,7 +18,7 @@ GPIO.setup(SPIMISO, GPIO.IN)
 GPIO.setup(SPICLK, GPIO.OUT)
 GPIO.setup(SPICS, GPIO.OUT)
 
-class CoffeePot:
+class CoffeeWeight:
     def __init__(self, name, adcnum, tolerance):
         self.name = name
         self.adcnum = adcnum
@@ -75,8 +75,8 @@ class CoffeePot:
     
 coffee_pot_list = []
 
-coffee_pot_list.append(CoffeePot("Left", 0, 5))
-coffee_pot_list.append(CoffeePot("Right", 1, 5))
+coffee_pot_list.append(CoffeePot("0", 0, 5))
+coffee_pot_list.append(CoffeePot("1", 1, 5))
 
 
 def getWeights():
