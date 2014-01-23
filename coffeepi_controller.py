@@ -29,7 +29,7 @@ class coffee_pot:
         coffee_pots[name] = self
 
     def addReading(self, value):
-        self.values.pop[0]
+        self.values.pop(0)
         self.values.append(value)
         temp_current_level = reduce(lambda x, y: x + y, self.values) / len(self.values)
         if value > full and self.removed:
