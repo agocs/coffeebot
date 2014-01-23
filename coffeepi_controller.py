@@ -33,16 +33,9 @@ class coffee_pot:
     def addReading(self, value):
         self.values.pop(0)
         self.values.append(value)
-        temp_current_level = reduce(lambda x, y: x + y, self.values) / len(self.values)
         if value > self.full and self.removed:
             self.lastbrew = time.time()
         self.removed = temp_current_level < self.off
-
-        #sumbitches = min(temp_current_level / self.full, 1)
-        #sumbitches = max(sumbitches, 0)
-
-        # self.postvalue = (self.full - self.empty) / (temp_current_level-self.empty)
-        self.postvalue = float((float(temp_current_level - self.empty)) / (float(self.full - self.empty)))
 
 
         # thiscurrentvalue = min(temp_current_level, self.full)
@@ -50,6 +43,17 @@ class coffee_pot:
 
         # self.post_value = (thiscurrentvalue - self.empty) / (self.full - self.empty)
         #self.post_value = sumbitches
+
+    def getPostValue(self):
+        temp_current_level = float(reduce(lambda x, y: x + y, self.values) / float(len(self.values)))
+
+        #sumbitches = min(temp_current_level / self.full, 1)
+        #sumbitches = max(sumbitches, 0)
+
+        # self.postvalue = (self.full - self.empty) / (temp_current_level-self.empty)
+        self.postvalue = float((float(temp_current_level - self.empty)) / (float(self.full - self.empty)))
+        return self.postvalue
+
         
 left = coffee_pot("1", full=130, empty = 61, off=10, max=130) 
 right = coffee_pot("2", full=60, empty = 30, off = 10, max=60)     
@@ -74,7 +78,7 @@ while True:
             temp_dict = {}
             temp_dict["pot"] = coffee_pots[item].name
             temp_dict["lastBrew"] = coffee_pots[item].lastbrew 
-            temp_dict["currentLevel"] = coffee_pots[item].post_value
+            temp_dict["currentLevel"] = coffee_pots[item].getPostValue()
             temp_dict["removed"] = coffee_pots[item].removed
             to_post["update"].append(temp_dict)
         ##POST HERE
