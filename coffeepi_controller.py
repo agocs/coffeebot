@@ -48,6 +48,7 @@ while True:
 
     
     readings = adafruit_mcp3008.getWeights()
+    print readings
     for reading in readings:
         if minimum_valid_data > readings[reading] or maximum_valid_data < readings[reading]:
             continue            
