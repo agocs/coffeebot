@@ -34,7 +34,7 @@ class Serial_LCD:
 		t1 = time(21, 15)
 		p1last = datetime.combine(d1, t1)
 		p1delta = now - p1last
-		m1, s1 = divmod(int(p1delta), 60)
+		m1, s1 = divmod(int(str(p1delta)), 60)
 		h1, m1 = divmod(m1, 60)
 
 		#p2last = data[1]["lastBrew"]
@@ -42,7 +42,7 @@ class Serial_LCD:
 		t2 = time(12, 35)
 		p2last = datetime.combine(d2, t2)
 		p2delta = now - p2last
-		m2, s2 = divmod(int(p2delta), 60)
+		m2, s2 = divmod(int(str(p2delta)), 60)
 		h2, m2 = divmod(m2, 60)
 
 		p1string = "%02d:%02d" % (h1, m1)
