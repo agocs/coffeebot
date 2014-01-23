@@ -36,7 +36,7 @@ class coffee_pot:
             self.lastbrew = time.time()
         self.removed = temp_current_level < self.off
         self.post_value = temp_current_level / self.max
-        
+        self.current_level = temp_current_level
         
 left = coffee_pot("1") 
 right = coffee_pot("2")      
