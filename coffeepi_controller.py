@@ -95,8 +95,8 @@ while True:
             print error
             print "it failed."
             contents = error.read()
-        lcd.writeToLcd(to_post["update"][lcd_count])
-        print to_post["update"][lcd_count]
+        lcd.writeToLcd(to_post["update"])
+        print to_post["update"]
         count = 1
         
     
