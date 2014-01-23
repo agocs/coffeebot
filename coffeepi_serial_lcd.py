@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-import datetime
+from datetime import datetime, date, time
 import serial
-import time
-import date
+
 
 class Serial_LCD:
 	def __init__(self, port, speed, program):
