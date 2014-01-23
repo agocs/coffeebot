@@ -6,7 +6,7 @@ import urllib
 import urllib2
 import json
 from coffeepi_serial_lcd import Serial_LCD
-lcd = serial_LCD('/dev/ttyAMA0', 19200)
+lcd = Serial_LCD('/dev/ttyAMA0', 19200)
 #This is the controller for our CoffeePi 
 
 import adafruit_mcp3008
