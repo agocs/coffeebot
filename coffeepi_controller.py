@@ -32,9 +32,9 @@ class coffee_pot:
         self.values.pop(0)
         self.values.append(value)
         temp_current_level = reduce(lambda x, y: x + y, self.values) / len(self.values)
-        if value > full and self.removed:
+        if value > self.full and self.removed:
             self.lastbrew = time.time()
-        self.removed = temp_current_level < off
+        self.removed = temp_current_level < self.off
         self.post_value = temp_current_level / self.max
         
         
