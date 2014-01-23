@@ -27,9 +27,13 @@ class coffee_pot:
         self.post_value = 1.0
         self.max = max
         coffee_pots[name] = self
+<<<<<<< HEAD
     def addReading(value):
-        values.pop[0]
-        values.append(value)
+=======
+    def addReading(self, value):
+>>>>>>> 8c6e386169109c57ba408f7957bb4d97f8ac00cc
+        self.values.pop[0]
+        self.values.append(value)
         temp_current_level = reduce(lambda x, y: x + y, self.values) / len(self.values)
         if value > full and self.removed:
             self.lastbrew = time.time()
@@ -69,7 +73,7 @@ while True:
         url = 'http://coffeemonitor-backstopcoffee.rhcloud.com/pots/update'
         params = json.JSONEncoder().encode(to_post)
         headers ={'Content-type': "application/json"}
-        req = urllib2.Rquest(url, params, headers)
+        req = urllib2.Request(url, params, headers)
 
         try: 
             response = urllib2.urlopen(req).read()
@@ -81,6 +85,6 @@ while True:
         
     
     ++count
-    sleep(1)
+    time.sleep(1)
     
 
