@@ -74,6 +74,7 @@ while True:
 
         try: 
             response = urllib2.urlopen(req).read()
+            print params
         except urllib2.HTTPError, error:
             contents = error.read()
         
