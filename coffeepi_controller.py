@@ -27,7 +27,7 @@ class coffee_pot:
         self.post_value = 1.0
         self.max = max
         coffee_pots[name] = self
-    def addReading(value):
+    def addReading(self, value):
         values.pop[0]
         values.append(value)
         temp_current_level = reduce(lambda x, y: x + y, self.values) / len(self.values)
