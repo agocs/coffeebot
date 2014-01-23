@@ -25,7 +25,7 @@ class Serial_LCD:
 		self.lcd.write(chr(148))
 		if data["pot"] == "1":
 			message = "<-- "
-		else
+		else:
 			message = "--> "
 
 		message += "Brew: " + data["lastBrew"]
