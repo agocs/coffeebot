@@ -387,3 +387,6 @@ if __name__ == '__main__':
     lcd.display()
     lcd.message("Adafruit LCD\nBackpack!")
     sleep(1)
+    lcd.noDisplay()
+    sleep(1)
+    lcd.message("TEST")
