@@ -11,7 +11,7 @@
 from Adafruit_I2C import Adafruit_I2C
 from time import sleep
 
-class Adafruit_CharLCDBackpack(Adafruit_I2C):
+class adafruit_lcd_backpack(Adafruit_I2C):
     # ----------------------------------------------------------------------
     # Constants
 
@@ -381,12 +381,11 @@ class Adafruit_CharLCDBackpack(Adafruit_I2C):
 
 if __name__ == '__main__':
 
-    lcd = Adafruit_CharLCDBackpack()
+    lcd = adafruit_lcd_backpack()
     lcd.begin(16, 2)
     lcd.clear()
     lcd.display()
     lcd.message("Adafruit LCD\nBackpack!")
-    sleep(1)
-    lcd.noDisplay()
-    sleep(1)
+    sleep(100)
+    lcd.clear()
     lcd.message("TEST")

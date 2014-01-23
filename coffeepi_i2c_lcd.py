@@ -1,10 +1,9 @@
 #!/usr/bin/env python
-import adafruit_lcdbackpack
-
-# This is a controller for displaying data on an LCD via I2C
-
+from adafruit_lcdbackpack import Adafruit_CharLCDBackpack
 
 class I2C_LCD:
+	# This is a controller for displaying data on an LCD via I2C
+
 	def __init__(self, bus, address):
 		initLcd(self, bus, address)
 
@@ -13,8 +12,6 @@ class I2C_LCD:
 		self.lcd.begin(16,2)
 		self.lcd.clear()
 		self.lcd.display()
-
-
 
 	def writeLcd(self, message):
 		self.lcd.message(message)
