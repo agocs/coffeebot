@@ -38,7 +38,8 @@ class coffee_pot:
             self.lastbrew = time.time()
         self.removed = temp_current_level < self.off
 
-        sumbitches = max(temp_current_level / self.empty , self.empty)
+        sumbitches = min(temp_current_level / self.full, 1)
+        sumbitches = max(sumbitches, 0)
 
         # thiscurrentvalue = min(temp_current_level, self.full)
         # thiscurrentvalue = max(thiscurrentvalue, self.empty)
