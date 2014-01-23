@@ -9,6 +9,6 @@ temp_dict = {}
 temp_dict["pot"] = 1
 temp_dict["lastBrew"] = "1/1/1900" 
 temp_dict["currentLevel"] = 0.54
-temp_dict["removed"] = false
+temp_dict["removed"] = False
 
 lcd.writeToLcd(temp_dict)
