@@ -80,6 +80,7 @@ while True:
             print params
         except urllib2.HTTPError, error:
             print error
+            print "it failed."
             contents = error.read()
         print "tried to send request"
         
