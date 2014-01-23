@@ -58,6 +58,7 @@ while True:
              temp_pot.addReading(readings[reading])
 
     if count % 10 == 0:
+        print "modded on 10"
         to_post = {"update":[]}
         for item in coffee_pots:
             temp_dict = {}
@@ -76,6 +77,7 @@ while True:
             response = urllib2.urlopen(req).read()
             print params
         except urllib2.HTTPError, error:
+            print "excepted for some reason"
             contents = error.read()
         
         
