@@ -82,7 +82,8 @@ while True:
         count = 0
         
     
-    ++count
+    count = count + 1
+    print count
     time.sleep(1)
     
 
