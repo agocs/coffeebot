@@ -5,8 +5,8 @@ from collections import deque
 import urllib
 import urllib2
 import json
-
-
+from coffeepi_serial_lcd import Serial_LCD
+lcd = serial_LCD('/dev/ttyAMA0', 19200)
 #This is the controller for our CoffeePi 
 
 import adafruit_mcp3008
@@ -100,8 +100,8 @@ while True:
             print "it failed."
             contents = error.read()
         print "tried to send request"
-        
-        
+        coffeepi_serial_lcd.write
+        lcd.writeToLcd(to_post["update"][lcd_count])
         count = 1
         
     
