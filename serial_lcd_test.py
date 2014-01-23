@@ -11,4 +11,5 @@ temp_dict["lastBrew"] = "1/1/1900"
 temp_dict["currentLevel"] = 0.54
 temp_dict["removed"] = False
 
+lcd.initLcd()
 lcd.writeToLcd(temp_dict)
