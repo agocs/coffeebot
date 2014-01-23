@@ -385,7 +385,11 @@ if __name__ == '__main__':
     lcd.begin(16, 2)
     lcd.clear()
     lcd.display()
+
+    lcd.setCursor(0,1)
     lcd.message("Adafruit LCD\nBackpack!")
     sleep(100)
     lcd.clear()
-    lcd.message("TEST")
+    lcd.noDisplay()
+    lcd.stop()
+    
