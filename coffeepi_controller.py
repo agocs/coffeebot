@@ -43,10 +43,9 @@ right = coffee_pot("2")
 
 
 
-
+count = 0
 while True:
-    print "entering while loop"
-    count = 0
+
     
     readings = adafruit_mcp3008.getWeights()
     for reading in readings:
@@ -57,7 +56,7 @@ while True:
         else:
              temp_pot = coffee_pots[reading] = coffee_pot(reading)
              temp_pot.addReading(readings[reading])
-    
+
     if count % 10 == 0:
         to_post = {"update":[]}
         for item in coffee_pots:
