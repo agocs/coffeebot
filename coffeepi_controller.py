@@ -60,7 +60,7 @@ class coffee_pot:
 
         
 left = coffee_pot("1", full=115, empty = 61, off=25, max=115) 
-right = coffee_pot("2", full=100, empty = 65, off = 25, max=50)     
+right = coffee_pot("2", full=80, empty = 65, off = 20, max=50)     
 
 
 
@@ -83,7 +83,7 @@ while True:
             temp_dict["currentLevel"] = coffee_pots[item].getPostValue()
             temp_dict["removed"] = coffee_pots[item].removed
             to_post["update"].append(temp_dict)
-            print to_post["update"]
+            print to_post["update"] 
         ##POST HERE
         url = 'http://coffeemonitor-backstopcoffee.rhcloud.com/pots/update'
         params = json.JSONEncoder().encode(to_post)
