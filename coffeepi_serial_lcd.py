@@ -30,29 +30,33 @@ class Serial_LCD:
 		# LINE2:    000%||000%	
 		now = datetime.now()
 
-		#p1last = data[0]["lastBrew"]
-		d1 = date(2014, 1, 22)
-		t1 = time(21, 15)
-		p1last = datetime.combine(d1, t1)
+		pot1 = date["0"]
+		p1last = pot1["lastBrew"]
 		p1delta = now - p1last
 		m1, s1 = divmod(p1delta.seconds, 60)
 		h1, m1 = divmod(m1, 60)
 
-		#p2last = data[1]["lastBrew"]
-		d2 = date(2014, 1, 22)
-		t2 = time(12, 35)
-		p2last = datetime.combine(d2, t2)
+		if h1 > 24:
+			p1age = " OLD "
+		else:
+			p1age = "%02d:%02d" % (h1, m1)
+
+		p1level = str(pot1["currentLevel"]*100)[:4] + '%'
+
+		pot2 = data["1"]
+		p2last = pot2["lastBrew"]
 		p2delta = now - p2last
 		m2, s2 = divmod(p2delta.seconds, 60)
 		h2, m2 = divmod(m2, 60)
 
-		p1string = "%02d:%02d" % (h1, m1)
-		p2string = "%02d:%02d" % (h2, m2)
+		if h2 > 24:
+			p2age = " OLD "
+		else:
+			p2age = "%02d:%02d" % (h2, m2)
+		
+		p2level = str(pot2["currentLevel"]*100)[:4] + '%'
 
-		p1level = str(0.54*100)[:4] + '%'
-		p2level = str(0.77*100)[:4] + '%'
-
-		message = "<-" + p1string + "||" + p2string + "->"
+		message = "<-" + p1age + "||" + p2age + "->"
 		message += "  " + p1level + "||" + p2level + "  "
 
 		self.lcd.write(chr(128))
