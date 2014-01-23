@@ -20,7 +20,7 @@ class Serial_LCD:
 			self.lcd.write(self.program)
 			self.lcd.write(chr(148))
 
-	def writeToLcd(self, data)
+	def writeToLcd(self, data):
 		#message += chr(32) * (16 - len(message))
 		self.lcd.write(chr(148))
 		if (data["pot"] == "1")
