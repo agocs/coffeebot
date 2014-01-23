@@ -27,7 +27,7 @@ class Serial_LCD:
 		#message format will be as follows:
 		# LINE1: <-00:00||00:00->		*NOTE: IF timespan > 24 hours 00:00 = OLD!!
 		# LINE2:    000%||000%	
-		now = time.time()
+		now = datetime.now()
 
 		#p1last = data[0]["lastBrew"]
 		d1 = date(2014, 1, 22)
