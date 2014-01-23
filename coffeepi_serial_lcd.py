@@ -4,10 +4,11 @@ import serial
 
 
 class Serial_LCD:
-	def __init__(self, port, speed, program):
+	def __init__(self, port, speed, program="Coffeebot 3000"):
 		self.port = port
 		self.speed = speed
 		self.program = program
+		initLcd()
 
 	def initLcd(self):
 		self.lcd = serial.Serial(port=self.port, baudrate=self.speed)
