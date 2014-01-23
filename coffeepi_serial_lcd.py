@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import datetime
-from dateutil import parser
 import serial
 import time
 
@@ -31,13 +30,17 @@ class Serial_LCD:
 		now = time.time()
 
 		#p1last = data[0]["lastBrew"]
-		p1last = parser.parse("1/22/2014 9:15PM")
+		d1 = date(2014, 1, 22)
+		t1 = time(21, 15)
+		p1last = datetime.combine(d1, t1)
 		p1delta = now - p1last
 		m1, s1 = divmod(p1delta, 60)
 		h1, m1 = divmod(m1, 60)
 
 		#p2last = data[1]["lastBrew"]
-		p2last = parser.parse("1/22/2014 12:35PM")
+		d2 = date(2014, 1, 22)
+		t2 = time(12, 35)
+		p2last = datetime.combine(d2, t2)
 		p2delta = now - p2last
 		m2, s2 = divmod(p2delta, 60)
 		h2, m2 = divmod(m2, 60)
