@@ -11,7 +11,7 @@ class Serial_LCD:
 	def initLcd(self):
 		self.lcd = serial.Serial(port=self.port, baudrate=self.speed)
 
-		if (self.lcd.isOpen())
+		if self.lcd.isOpen():
 			self.lcd.write(chr(32) * 32)
 			self.lcd.write(chr(12))
 			self.lcd.write(chr(18))
