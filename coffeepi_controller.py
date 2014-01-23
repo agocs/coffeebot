@@ -36,7 +36,6 @@ class coffee_pot:
             self.lastbrew = time.time()
         self.removed = temp_current_level < self.off
         self.post_value = temp_current_level / self.max
-        self.current_level = temp_current_level
         
 left = coffee_pot("1") 
 right = coffee_pot("2")      
@@ -61,9 +60,7 @@ while True:
             temp_dict = {}
             temp_dict["pot"] = coffee_pots[item].name
             temp_dict["lastBrew"] = coffee_pots[item].lastbrew 
-            temp_dict["currentLevel"] = coffee_pots[item].current_level
-            print coffee_pots[item].current_level
-            print temp_dict["currentLevel"]
+            temp_dict["currentLevel"] = coffee_pots[item].post_value
             temp_dict["removed"] = coffee_pots[item].removed
             to_post["update"].append(temp_dict)
         ##POST HERE
