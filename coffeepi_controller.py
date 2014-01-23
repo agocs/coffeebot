@@ -59,8 +59,9 @@ while True:
         to_post = {"update":[]}
         for item in coffee_pots:
             temp_dict = {}
-            print temp_dict
             temp_dict["pot"] = coffee_pots[item].name
+            print coffee_pots[item].name
+            print temp_dict["pot"]
             temp_dict["lastBrew"] = coffee_pots[item].lastbrew 
             temp_dict["currentLevel"] = coffee_pots[item].current_level
             temp_dict["removed"] = coffee_pots[item].removed
