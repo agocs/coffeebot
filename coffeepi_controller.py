@@ -69,17 +69,19 @@ while True:
             temp_dict["removed"] = coffee_pots[item].removed
             to_post["update"].append(temp_dict)
         ##POST HERE
+        print "exited the for"
         url = 'http://coffeemonitor-backstopcoffee.rhcloud.com/pots/update'
         params = json.JSONEncoder().encode(to_post)
         headers ={'Content-type': "application/json"}
         req = urllib2.Request(url, params, headers)
-
+        print "about to try"
         try: 
             response = urllib2.urlopen(req).read()
             print params
         except urllib2.HTTPError, error:
             print error
             contents = error.read()
+        print "tried to send request"
         
         
         count = 0
