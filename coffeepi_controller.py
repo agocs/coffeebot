@@ -51,8 +51,8 @@ class coffee_pot:
         # self.post_value = (thiscurrentvalue - self.empty) / (self.full - self.empty)
         #self.post_value = sumbitches
         
-left = coffee_pot("1", full=130, empty = 61, off=10, max=90) 
-right = coffee_pot("2", full=60, empty = 30, off = 10, max=45)     
+left = coffee_pot("1", full=130, empty = 61, off=10, max=130) 
+right = coffee_pot("2", full=60, empty = 30, off = 10, max=60)     
 
 
 
