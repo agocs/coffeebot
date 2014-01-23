@@ -45,6 +45,7 @@ right = coffee_pot("2")
 
 
 while True:
+    print "entering while loop"
     count = 0
     
     readings = adafruit_mcp3008.getWeights()
