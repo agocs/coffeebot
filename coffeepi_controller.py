@@ -35,7 +35,7 @@ class coffee_pot:
         self.values.append(value)
         if value > self.full and self.removed:
             self.lastbrew = time.time()
-        self.removed = temp_current_level < self.off
+        self.removed = value < self.off
 
 
         # thiscurrentvalue = min(temp_current_level, self.full)
