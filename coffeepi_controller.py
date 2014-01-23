@@ -69,14 +69,12 @@ while True:
 
     
     readings = adafruit_mcp3008.getWeights()
-    print readings
     for reading in readings:
         if minimum_valid_data > readings[reading] or maximum_valid_data < readings[reading]:
             continue            
         coffee_pots[reading].addReading(readings[reading])
 
     if count % 10 == 0:
-        print "modded on 10"
         to_post = {"update":[]}
         for item in coffee_pots:
             temp_dict = {}
@@ -86,12 +84,10 @@ while True:
             temp_dict["removed"] = coffee_pots[item].removed
             to_post["update"].append(temp_dict)
         ##POST HERE
-        print "exited the for"
         url = 'http://coffeemonitor-backstopcoffee.rhcloud.com/pots/update'
         params = json.JSONEncoder().encode(to_post)
         headers ={'Content-type': "application/json"}
         req = urllib2.Request(url, params, headers)
-        print "about to try"
         try: 
             response = urllib2.urlopen(req).read()
             print params
@@ -99,14 +95,13 @@ while True:
             print error
             print "it failed."
             contents = error.read()
-        print "tried to send request"
         coffeepi_serial_lcd.write
         lcd.writeToLcd(to_post["update"][lcd_count])
+        print to_post["update"][lcd_count]
         count = 1
         
     
     count = count + 1
-    print count
     time.sleep(1)
     
 
