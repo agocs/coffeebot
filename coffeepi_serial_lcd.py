@@ -8,7 +8,17 @@ class Serial_LCD:
 		self.port = port
 		self.speed = speed
 		self.program = program
-		initLcd()
+		self.lcd = serial.Serial(port=self.port, baudrate=self.speed)
+
+		if self.lcd.isOpen():
+			self.lcd.write(chr(32) * 32)
+			self.lcd.write(chr(12))
+			#time.sleep(5)
+			self.lcd.write(chr(22))
+			
+			self.lcd.write(chr(128))
+			self.lcd.write(self.program)
+			self.lcd.write(chr(148))
 
 	def initLcd(self):
 		self.lcd = serial.Serial(port=self.port, baudrate=self.speed)
