@@ -36,7 +36,7 @@ class coffee_pot:
         if value > self.full and self.removed:
             self.lastbrew = time.time()
         self.removed = value < self.off
-
+        print "Coffee Pot: " + self.name + " is reading " + reading + "\n"
 
         # thiscurrentvalue = min(temp_current_level, self.full)
         # thiscurrentvalue = max(thiscurrentvalue, self.empty)
@@ -97,7 +97,6 @@ while True:
             print "it failed."
             contents = error.read()
         lcd.writeToLcd(to_post["update"])
-        print to_post["update"]
         count = 1
         
     
