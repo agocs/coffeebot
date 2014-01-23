@@ -51,11 +51,7 @@ while True:
     for reading in readings:
         if minimum_valid_data > readings[reading] or maximum_valid_data < readings[reading]:
             continue            
-        if reading in coffee_pots:
-            coffee_pots[reading].addReading(readings[reading])
-        else:
-             temp_pot = coffee_pots[reading] = coffee_pot(reading)
-             temp_pot.addReading(readings[reading])
+        coffee_pots[reading].addReading(readings[reading])
 
     if count % 10 == 0:
         print "modded on 10"
