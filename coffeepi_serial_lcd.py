@@ -40,7 +40,7 @@ class Serial_LCD:
 		# LINE2:    000%||000%	
 		now = datetime.now()
 
-		pot1 = date["0"]
+		pot1 = data["0"]
 		p1last = pot1["lastBrew"]
 		p1delta = now - p1last
 		m1, s1 = divmod(p1delta.seconds, 60)
