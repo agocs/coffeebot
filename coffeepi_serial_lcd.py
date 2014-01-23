@@ -1,6 +1,8 @@
 #!/usr/bin/env python
+import datetime
 import serial
 import time
+import date
 
 class Serial_LCD:
 	def __init__(self, port, speed, program):
@@ -26,9 +28,32 @@ class Serial_LCD:
 		#message format will be as follows:
 		# LINE1: <-00:00||00:00->		*NOTE: IF timespan > 24 hours 00:00 = OLD!!
 		# LINE2:    000%||000%	
+		now = time.time()
 
-		message = "<-00:00||00:00->"
-		message += "   000%||000%   "
+		#p1last = data[0]["lastBrew"]
+		d1 = date(2014, 1, 22)
+		t1 = time(21, 15)
+		p1last = datetime.combine(d1, t1)
+		p1delta = now - p1last
+		m1, s1 = divmod(p1delta, 60)
+		h1, m1 = divmod(m1, 60)
+
+		#p2last = data[1]["lastBrew"]
+		d2 = date(2014, 1, 22)
+		t2 = time(12, 35)
+		p2last = datetime.combine(d2, t2)
+		p2delta = now - p2last
+		m2, s2 = divmod(p2delta, 60)
+		h2, m2 = divmod(m2, 60)
+
+		p1string = "%02d:%02d" % (h1, m1)
+		p2string = "%02d:%02d" % (h2, m2)
+
+		p1level = str(0.54*100)[:4] + '%'
+		p2level = str(0.77*100)[:4] + '%'
+
+		message = "<-" + p1string + "||" + p2string + "->"
+		message += "  " + p1level + "||" + p2level + "  "
 
 		self.lcd.write(chr(128))
 		self.lcd.write(message)
