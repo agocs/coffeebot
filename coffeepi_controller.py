@@ -24,7 +24,7 @@ class coffee_pot:
         self.full = full
         self.empty = empty
         self.off = off
-        self.post_value = 1.0
+        self.post_value = 0
         self.max = max
         coffee_pots[name] = self
 
