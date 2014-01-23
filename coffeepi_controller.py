@@ -83,7 +83,7 @@ while True:
             temp_dict["currentLevel"] = coffee_pots[item].getPostValue()
             temp_dict["removed"] = coffee_pots[item].removed
             to_post["update"].append(temp_dict)
-            print to_post["update"] 
+            print to_post["update"]
         ##POST HERE
         url = 'http://coffeemonitor-backstopcoffee.rhcloud.com/pots/update'
         params = json.JSONEncoder().encode(to_post)
