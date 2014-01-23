@@ -4,6 +4,7 @@ from collections import deque
 import urllib
 import urllib2
 import json
+from __future__ import division
 
 #This is the controller for our CoffeePi 
 
