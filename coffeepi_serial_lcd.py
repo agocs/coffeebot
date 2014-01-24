@@ -34,6 +34,26 @@ class Serial_LCD:
 			self.lcd.write(self.program)
 			self.lcd.write(chr(148))
 
+
+	def formatPercent(self, level, side):
+		if level == 0:
+			fl = 1
+		elif level == 1:
+			fl = 3
+		else:
+			fl = 2
+
+		fstr = str(level*100)[:fl] + '%'
+		pad = chr(32) * (5 - len(fstr))
+
+		if side == "left":
+			fstr = pad + fstr
+
+		if side == "right":
+			fstr = fstr + pad
+
+		return fstr
+
 	def writeToLcd(self, data):
 		#message += chr(32) * (16 - len(message))
 		#message format will be as follows:
@@ -73,22 +93,3 @@ class Serial_LCD:
 		self.lcd.write(chr(128))
 		self.lcd.write(message)
 
-
-	def formatPercent(self, level, side):
-		if level == 0:
-			fl = 1
-		elif level == 1:
-			fl = 3
-		else:
-			fl = 2
-
-		fstr = str(level*100)[:fl] + '%'
-		pad = chr(32) * (5 - len(fstr))
-
-		if side == "left":
-			fstr = pad + fstr
-
-		if side == "right":
-			fstr = fstr + pad
-
-		return fstr
