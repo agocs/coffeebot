@@ -64,6 +64,9 @@ class Serial_LCD:
 
 		p1level = self.formatPercent(pot1["currentLevel"], "left")
 
+		if p1level == "EMPTY"
+			p1age = "EMPTY"
+
 		pot2 = data[1]
 		p2last = pot2["lastBrew"]
 		p2delta = now - p2last
@@ -76,6 +79,9 @@ class Serial_LCD:
 			p2age = "%02d:%02d" % (h2, m2)
 		
 		p2level = self.formatPercent(pot2["currentLevel"], "right")
+
+		if p2level == "EMPTY"
+			p2age = "EMPTY"
 
 		message = "<-" + p1age + "||" + p2age + "->"
 		message += "  " + p1level + "||" + p2level + "  "
