@@ -52,7 +52,7 @@ class Serial_LCD:
 		else:
 			p1age = "%02d:%02d" % (h1, m1)
 
-		p1level = str(pot1["currentLevel"]*100)[:4] + '%'
+		p1level = formatPercent(pot1["currentLevel"], "left")
 
 		pot2 = data[1]
 		p2last = pot2["lastBrew"]
@@ -65,10 +65,30 @@ class Serial_LCD:
 		else:
 			p2age = "%02d:%02d" % (h2, m2)
 		
-		p2level = str(pot2["currentLevel"]*100)[:4] + '%'
+		p2level = formatPercent(pot2["currentLevel"], "left")
 
 		message = "<-" + p1age + "||" + p2age + "->"
 		message += "  " + p1level + "||" + p2level + "  "
 
 		self.lcd.write(chr(128))
 		self.lcd.write(message)
+
+
+	def formatPercent(self, level, side):
+		if level == 0:
+			fl = 1
+		else if level == 1:
+			fl = 3
+		else:
+			fl = 2
+
+		fstr = str(level*100)[:fl] + '%'
+		pad = chr(32) * (5 - len(fstr))
+
+		if side == "left":
+			fstr = pad + fstr
+
+		if side == "right":
+			fstr = fstr + pad
+
+		return fstr
