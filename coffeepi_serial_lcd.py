@@ -77,7 +77,7 @@ class Serial_LCD:
 	def formatPercent(self, level, side):
 		if level == 0:
 			fl = 1
-		else if level == 1:
+		elif level == 1:
 			fl = 3
 		else:
 			fl = 2
