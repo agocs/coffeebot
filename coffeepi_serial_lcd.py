@@ -65,7 +65,7 @@ class Serial_LCD:
 		else:
 			p2age = "%02d:%02d" % (h2, m2)
 		
-		p2level = formatPercent(pot2["currentLevel"], "left")
+		p2level = formatPercent(pot2["currentLevel"], "right")
 
 		message = "<-" + p1age + "||" + p2age + "->"
 		message += "  " + p1level + "||" + p2level + "  "
