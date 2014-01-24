@@ -91,7 +91,6 @@ while True:
         req = urllib2.Request(url, params, headers)
         try: 
             response = urllib2.urlopen(req).read()
-            print params
         except urllib2.HTTPError, error:
             print error
             print "it failed."
