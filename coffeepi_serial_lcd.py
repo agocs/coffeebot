@@ -39,6 +39,9 @@ class Serial_LCD:
 		if side == "right":
 			fstr = fstr + pad
 
+		if level == 0:
+			fstr = "EMPTY"
+
 		return fstr
 
 	def writeToLcd(self, data):
