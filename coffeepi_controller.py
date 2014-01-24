@@ -60,7 +60,7 @@ class coffee_pot:
 
         
 left = coffee_pot("1", full=115, empty = 65, off=25, max=115) 
-right = coffee_pot("2", full=80, empty = 65, off = 20, max=50)     
+right = coffee_pot("2", full=125, empty = 65, off = 20, max=50)     
 
 
 
