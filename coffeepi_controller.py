@@ -13,7 +13,7 @@ import adafruit_mcp3008
 
 coffee_pots={}
 
-minimum_valid_data = 5
+minimum_valid_data = 0
 maximum_valid_data = 700
 
 class coffee_pot:
@@ -59,7 +59,7 @@ class coffee_pot:
         return self.postvalue
 
         
-left = coffee_pot("1", full=67, empty = 23, off=25, max=115) 
+left = coffee_pot("1", full=67, empty = 21, off=12, max=115) 
 right = coffee_pot("2", full=125, empty = 65, off = 20, max=50)     
 
 
