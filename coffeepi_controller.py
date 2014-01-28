@@ -16,6 +16,10 @@ coffee_pots={}
 minimum_valid_data = 0
 maximum_valid_data = 700
 
+
+## important, the max of a pot is the fullest we will consider the pot to be ever, but the full amount is how heavy
+## it needs to be in order to be considered full by our controller.
+
 class coffee_pot:
     def __init__(self, name, full=400, empty=50, off=0, max=500.00):
         self.name = name
@@ -60,7 +64,7 @@ class coffee_pot:
 
         
 left = coffee_pot("1", full=40, empty = 21, off=12, max=50) 
-right = coffee_pot("2", full=125, empty = 65, off = 20, max=50)     
+right = coffee_pot("2", full=100, empty = 64, off = 20, max=125)     
 
 
 
