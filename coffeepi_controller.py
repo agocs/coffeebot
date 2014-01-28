@@ -17,7 +17,7 @@ minimum_valid_data = 0
 maximum_valid_data = 700
 
 class coffee_pot:
-    def __init__(self, name, full=400, empty=50, off=20, max=500.00):
+    def __init__(self, name, full=400, empty=50, off=0, max=500.00):
         self.name = name
         self.values = [0,0,0,0,0,0,0,0,0,0]
         self.lastbrew = time.time()
@@ -59,7 +59,7 @@ class coffee_pot:
         return self.postvalue
 
         
-left = coffee_pot("1", full=67, empty = 21, off=12, max=115) 
+left = coffee_pot("1", full=41, empty = 21, off=12, max=115) 
 right = coffee_pot("2", full=125, empty = 65, off = 20, max=50)     
 
 
