@@ -51,7 +51,7 @@ class coffee_pot:
         #sumbitches = max(sumbitches, 0)
 
         # self.postvalue = (self.full - self.empty) / (temp_current_level-self.empty)
-        self.postvalue = float((float(temp_current_level - self.empty)) / (float(self.full - self.empty)))
+        self.postvalue = float((float(temp_current_level - self.empty)) / (float(self.max - self.empty)))
 
         self.postvalue = min(self.postvalue, 1)
         self.postvalue = max(self.postvalue, 0)
@@ -59,7 +59,7 @@ class coffee_pot:
         return self.postvalue
 
         
-left = coffee_pot("1", full=41, empty = 21, off=12, max=115) 
+left = coffee_pot("1", full=40, empty = 21, off=12, max=50) 
 right = coffee_pot("2", full=125, empty = 65, off = 20, max=50)     
 
 
