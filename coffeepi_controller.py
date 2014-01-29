@@ -32,6 +32,7 @@ class coffee_pot:
         self.off = off
         self.post_value = 0
         self.max = max
+        self.max_cycle = 0
         coffee_pots[name] = self
 
     def addReading(self, value):
@@ -39,6 +40,7 @@ class coffee_pot:
         self.values.append(value)
         if value > self.full and self.removed:
             self.lastbrew = time.time()
+            self.max = value
         self.removed = value < self.off
         print "Coffee Pot: " + self.name + " is reading " + str(value) + "\n"
 
@@ -63,7 +65,7 @@ class coffee_pot:
         return self.postvalue
 
         
-left = coffee_pot("1", full=40, empty = 21, off=12, max=50) 
+left = coffee_pot("1", full=35, empty = 21, off=12, max=50) 
 right = coffee_pot("2", full=100, empty = 64, off = 20, max=125)     
 
 
@@ -77,6 +79,12 @@ while True:
         if minimum_valid_data > readings[reading] or maximum_valid_data < readings[reading]:
             continue            
         coffee_pots[reading].addReading(readings[reading])
+        if coffee_pots[reading].max_cycle != 0:
+            if coffee_pots[reading].max_cycle < 2:
+                coffee_pots[reading].max_cycle += 1
+            else:
+                coffee_pots[reading].max_cycle = 0
+                coffee_pots[reading].max = reading 
 
     if count % 10 == 0:
         to_post = {"update":[]}
@@ -106,4 +114,7 @@ while True:
     count = count + 1
     time.sleep(1)
     
+
+
+    #
 
