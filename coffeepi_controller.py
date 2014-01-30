@@ -40,7 +40,6 @@ class coffee_pot:
         self.values.append(value)
         if value > self.full and self.removed:
             self.lastbrew = time.time()
-            self.max = value
         self.removed = value < self.off
         print "Coffee Pot: " + self.name + " is reading " + str(value) + "\n"
 
