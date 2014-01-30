@@ -65,7 +65,7 @@ class coffee_pot:
         return self.postvalue
 
         
-left = coffee_pot("1", full=35, empty = 21, off=12, max=50) 
+left = coffee_pot("1", full=35, empty = 21, off=6, max=50) 
 right = coffee_pot("2", full=100, empty = 64, off = 20, max=125)     
 
 
