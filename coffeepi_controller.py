@@ -65,8 +65,8 @@ class coffee_pot:
         return self.postvalue
 
         
-left = coffee_pot("1", full=35, empty = 21, off=6, max=50) 
-right = coffee_pot("2", full=100, empty = 64, off = 20, max=125)     
+left = coffee_pot("1", full=35, empty = 21, off=15, max=50) 
+right = coffee_pot("2", full=60, empty = 64, off = 20, max=125)     
 
 
 
@@ -80,7 +80,7 @@ while True:
             continue            
         coffee_pots[reading].addReading(readings[reading])
         if coffee_pots[reading].max_cycle != 0:
-            if coffee_pots[reading].max_cycle < 2:
+            if coffee_pots[reading].max_cycle < 3:
                 coffee_pots[reading].max_cycle += 1
             else:
                 coffee_pots[reading].max_cycle = 0
