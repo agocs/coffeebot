@@ -17,7 +17,7 @@ class Serial_LCD:
 			self.lcd.write(chr(12))
 			time.sleep(5)
 			self.lcd.write(chr(22))
-			
+
 			self.lcd.write(chr(128))
 			self.lcd.write(self.program)
 			self.lcd.write(chr(148))
@@ -48,7 +48,7 @@ class Serial_LCD:
 		#message += chr(32) * (16 - len(message))
 		#message format will be as follows:
 		# LINE1: <-00:00||00:00->		*NOTE: IF timespan > 24 hours 00:00 = OLD!!
-		# LINE2:    000%||000%	
+		# LINE2:    000%||000%
 		now = time.time()
 
 		pot1 = data[0]
@@ -77,15 +77,15 @@ class Serial_LCD:
 			p2age = " OLD "
 		else:
 			p2age = "%02d:%02d" % (h2, m2)
-		
+
 		p2level = self.formatPercent(pot2["currentLevel"], "right")
 
 		if p2level == "EMPTY":
 			p2age = "EMPTY"
 
 		message = "<-" + p1age + "||" + p2age + "->"
-		message += "  " + p1level + "||" + p2level + "  "
-
+		##message += "  " + p1level + "||" + p2level + "  "
+		message += "COFFEE BOT 3000"
 		self.lcd.write(chr(128))
 		self.lcd.write(message)
 
