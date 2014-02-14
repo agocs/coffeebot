@@ -7,7 +7,7 @@ import urllib2
 import json
 from coffeepi_serial_lcd import Serial_LCD
 lcd = Serial_LCD('/dev/ttyAMA0', 19200)
-#This is the controller for our CoffeePi 
+#This is the controller for our CoffeePi
 
 import adafruit_mcp3008
 
@@ -53,20 +53,20 @@ class coffee_pot:
 
         return self.postvalue
 
-        
-left = coffee_pot("1", full=35, empty = 21, off=15, max=50) 
-right = coffee_pot("2", full=60, empty = 64, off = 20, max=125)     
+
+left = coffee_pot("1", full=35, empty = 21, off=15, max=50)
+right = coffee_pot("2", full=60, empty = 64, off = 20, max=125)
 
 
 
 count = 1
 while True:
 
-    
+
     readings = adafruit_mcp3008.getWeights()
     for reading in readings:
         if minimum_valid_data > readings[reading] or maximum_valid_data < readings[reading]:
-            continue            
+            continue
         coffee_pots[reading].addReading(readings[reading])
 
     if count % 10 == 0:
@@ -74,8 +74,8 @@ while True:
         for item in coffee_pots:
             temp_dict = {}
             temp_dict["pot"] = coffee_pots[item].name
-            temp_dict["lastBrew"] = coffee_pots[item].lastbrew 
-            temp_dict["currentLevel"] = coffee_pots[item].getPostValue()
+            temp_dict["lastBrew"] = coffee_pots[item].lastbrew
+            temp_dict["currentLevel"] = 0##coffee_pots[item].getPostValue()
             temp_dict["removed"] = coffee_pots[item].removed
             to_post["update"].append(temp_dict)
             print to_post["update"]
@@ -84,7 +84,7 @@ while True:
         params = json.JSONEncoder().encode(to_post)
         headers ={'Content-type': "application/json"}
         req = urllib2.Request(url, params, headers)
-        try: 
+        try:
             response = urllib2.urlopen(req).read()
         except urllib2.HTTPError, error:
             print error
@@ -92,11 +92,11 @@ while True:
             contents = error.read()
         lcd.writeToLcd(to_post["update"])
         count = 1
-        
-    
+
+
     count = count + 1
     time.sleep(1)
-    
+
 
 
     #
