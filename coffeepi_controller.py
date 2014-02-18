@@ -75,7 +75,7 @@ while True:
             temp_dict = {}
             temp_dict["pot"] = coffee_pots[item].name
             temp_dict["lastBrew"] = coffee_pots[item].lastbrew
-            temp_dict["currentLevel"] = 0##coffee_pots[item].getPostValue()
+            temp_dict["currentLevel"] = coffee_pots[item].getPostValue()
             temp_dict["removed"] = coffee_pots[item].removed
             to_post["update"].append(temp_dict)
             print to_post["update"]
