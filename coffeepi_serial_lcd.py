@@ -3,8 +3,7 @@ import datetime
 import time
 import serial
 
-
-class Serial_LCD:
+class coffee_pi_serial_lcd:
 	def __init__(self, port, speed, program="Coffeebot 3000"):
 		self.port = port
 		self.speed = speed
