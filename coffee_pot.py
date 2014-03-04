@@ -6,18 +6,21 @@ import logging
 ## empty = sensor value when the coffee pot is empty (approximate)
 ## off = sensor value when the coffee pot has been removed (approximate)
 ## max = sensor value maximum reading (consider additional pressure from a human pumping the coffee out)
+## file = the name of the file that the coffe pot will write its last brew time into.
+
 
 class coffee_pot:
-    def __init__(self, name, full=400, empty=50, off=0, max=500.00):
+    def __init__(self, name, full=400, empty=50, off=0, max=500.00, file = None):
         self.name = name
         self.values = [0,0,0,0,0,0,0,0,0,0]
-        self.lastbrew = time.time()-1
+        self.lastbrew = getLastBrew()
         self.removed = False
         self.full = full
         self.empty = empty
         self.off = off
         self.postvalue = 0
         self.max = max
+        self.file = file
 
     def addReading(self, value):
 		## Before adding the new value, filter it?
@@ -36,7 +39,13 @@ class coffee_pot:
 		## Another suggestion is to set and store the last removed time, and if recent and we get a reading near full, only then do we reset lastbrew time
 		## A final suggestion, probably the most import, is to add a bias value to this class; the bias value is used to provide a range of values to compare against
 		## when setting flags for removed and lastbrew at least
-		
+
+
+
+        ## Zach's responses - 
+        ## 1) self.full should be used as a minimum value.  The range is essentially anything greater than self.full.
+        ## 2) a) this whole system is relying on accurate measurements.  It relies on self.off being absolute, as well as self.full.  If we are going to implement any kind of leniency, than a large part of the system would need to change, and we may need to reframe the entire measurement methodology.
+        ## 3) as for using bias values, it seems to me that in this sort of system, we would want to use absolute minimums or maximums.  For instance, we know that x is the lightest it weighs when full, so anything above x is full, not anything within a range of x.  I think we should either wait for the more accurate scales to be in place, and use absolutes, or develop a reliable way of getting accurate levels from an inaccurate scale.
         if value > self.full and self.removed:
             self.lastbrew = time.time()
         self.removed = value < self.off
@@ -52,3 +61,30 @@ class coffee_pot:
 
 		logging.info('Coffee Pot: %s post value is %s', self.name, str(self.postvalue))
         return self.postvalue
+
+
+
+    def getLastBrew(self):
+        """getLastBrew checks to see if self.file exists, and if it does, reads out the first line. 
+        I didn't think we needed to check the contents, because nothing extra could end up 
+        there, and when we write to the file, we us w+ which deletes the content anyway."""
+        logging.info("%s is getting an initial value for its last brew time.", self.name)
+        try:
+            if os.path.exists(self.file):
+                last_brew_file = open(self.file, "r")
+                last_brew_file.seek(0)
+                logging.info("last brew time was read from %s.", self.file)
+                return last_brew_file.readline()
+            else:
+                logging.info("last brew time was set to current time, because no last brew file was detected.")
+                return time.time()
+
+        except:
+            logging.exception("Error occured when setting initial last brew time.")
+
+ 
+    def writeLastBrew(self):
+        """writeLastBrew either opens the existing self.file, deletes the contents and writes time.time()
+        or it creates the file """
+        last_brew_file = open(self.file, 'w+')
+        last_brew_file.write(str(time.time()))

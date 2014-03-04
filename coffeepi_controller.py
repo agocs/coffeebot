@@ -23,8 +23,8 @@ lcd = coffeepi_serial_lcd('/dev/ttyAMA0', 19200)
 
 logging.info('Initializing coffee pot objects...')
 coffee_pots={}
-coffee_pots["1"] = coffee_pot("1", full=70, empty = 35, off = valid_data_min, max=valid_data_max)
-coffee_pots["2"] = coffee_pot("2", full=70, empty = 35, off = valid_data_min, max=valid_data_max)
+coffee_pots["1"] = coffee_pot("1", full=70, empty = 35, off = valid_data_min, max=valid_data_max, file = "coffe_pot_1.txt")
+coffee_pots["2"] = coffee_pot("2", full=70, empty = 35, off = valid_data_min, max=valid_data_max, file = "coffee_pot_2.txt")
 
 logging.info('Entering main loop...')
 count = 1
@@ -61,6 +61,11 @@ while True:
 				to_post["update"].append(temp_dict)
 				logging.info('Data dictionary created: %s', to_post["update"])
 				
+				# I'm placing this here since we are already iterating through coffee_pots.
+				# If we want to put it in it's own for loop for consistency's sake, it shouldn't
+				# make a difference.
+				coffee_pots[item].writeLastBrew()
+
 			##POST HERE
 			try:
 				logging.info('Preparing to post data to coffee monitor site...')
