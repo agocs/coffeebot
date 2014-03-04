@@ -64,8 +64,12 @@ while True:
 				# I'm placing this here since we are already iterating through coffee_pots.
 				# If we want to put it in it's own for loop for consistency's sake, it shouldn't
 				# make a difference.
-				coffee_pots[item].writeLastBrew()
-
+				
+				logging.info("writing lastbrew date for %s to file: %s", coffee_pots[item].name, coffee_pots[item].file)
+				try:
+					coffee_pots[item].writeLastBrew()
+				except:
+					logging.exception('Error occured while writing last brew for a coffee pot.')
 			##POST HERE
 			try:
 				logging.info('Preparing to post data to coffee monitor site...')
