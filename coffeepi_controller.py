@@ -65,7 +65,7 @@ def initialize_coffee_pots():
         logging.exception("Problem when initializing coffee pots.")
 
 
-##THESE ARE EVENT LOOP FUNCTINOS.  They are used to add readings and send them out.
+##THESE ARE EVENT LOOP FUNCTIONS.  They are used to add readings and send them out.
 
 def read_write_sensors():
     """reads values by calling getWeights fron adafruit_mcp3008.  """
@@ -81,7 +81,7 @@ def read_write_sensors():
                 
             if VALID_DATA_MAX < value:
                 value = VALID_DATA_MAX
-            COFFEE_POTS[reading].addReading(value)
+            COFFEE_POTS[reading].add_reading(value)
         logging.info("Sensors read and reading set to coffee pots successfully.")
     except:
         logging.exception('Error occurred during read and setting values from sensors')
@@ -99,7 +99,7 @@ def build_post_request():
             temp_dict = {}
             temp_dict["pot"] = COFFEE_POTS[item].name
             temp_dict["lastBrew"] = COFFEE_POTS[item].lastbrew
-            temp_dict["currentLevel"] = COFFEE_POTS[item].getPostValue()
+            temp_dict["currentLevel"] = COFFEE_POTS[item].get_post_value()
             temp_dict["removed"] = COFFEE_POTS[item].removed
             to_post["update"].append(temp_dict)
             logging.info('Data dictionary created: %s', 
