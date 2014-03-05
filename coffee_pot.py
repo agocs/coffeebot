@@ -24,8 +24,8 @@ class coffee_pot:
 
     def addReading(self, value):
 		## Before adding the new value, filter it?
-		self.values.pop(0)
-		self.values.append(value)
+        self.values.pop(0)
+        self.values.append(value)
 		
 		## This doesn't look like it will work for a few reasons
 		## 1) value comparisons (against self.full and self.off should be ranged or approximate; if full = 200 and sensor reads 195, isnt that full?
@@ -48,6 +48,7 @@ class coffee_pot:
         ## 3) as for using bias values, it seems to me that in this sort of system, we would want to use absolute minimums or maximums.  For instance, we know that x is the lightest it weighs when full, so anything above x is full, not anything within a range of x.  I think we should either wait for the more accurate scales to be in place, and use absolutes, or develop a reliable way of getting accurate levels from an inaccurate scale.
         if value > self.full and self.removed:
             self.lastbrew = time.time()
+            writeLastBrew()
         self.removed = value < self.off
         logging.info('Coffee Pot: %s is reading %s', self.name, str(value))
 
@@ -58,8 +59,7 @@ class coffee_pot:
 
         self.postvalue = min(self.postvalue, 1)
         self.postvalue = max(self.postvalue, 0)
-
-		logging.info('Coffee Pot: %s post value is %s', self.name, str(self.postvalue))
+        logging.info('Coffee Pot: %s post value is %s', self.name, str(self.postvalue))
         return self.postvalue
 
 
