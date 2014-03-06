@@ -4,15 +4,17 @@ this module is the data controller for the coffeebot!"""
 
 #!/usr/bin/env python
 #This is the controller for our CoffeePi
-
 from __future__ import division
+import logging
+from coffee_pot import coffee_pot
 import time
 import urllib2
 import json
-import logging
-import adafruit_mcp3008
-from coffee_pot import coffee_pot
-from coffeepi_serial_lcd import coffeepi_serial_lcd
+if __name__ == '__main__':
+    import adafruit_mcp3008
+    from coffeepi_serial_lcd import coffeepi_serial_lcd
+else:
+    import reading_faker as adafruit_mcp3008
 
 #defaults for readings off of sensors
 VALID_DATA_MIN = 20
