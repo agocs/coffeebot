@@ -25,10 +25,12 @@ COFFEE_POTS = {}
 
 ## THESE ARE SET UP FUNCTIONS.  They prepare for the main loop.
 def configure_logging():
-    """Sets up the basic configuration for loggin."""
+    """Sets up the basic configuration for logging."""
     logging.basicConfig(file='coffee_bot_3000.log', 
                         level=30, 
-                        format='%(asctime)s %(levelname)s %(message)s')
+                        format='%(asctime)s %(levelname)s %(message)s',
+                        filemode='w'
+                        )
     logging.info("Logging configured.")
 
 
