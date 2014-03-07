@@ -31,7 +31,8 @@ def configure_logging():
                         format='%(asctime)s %(levelname)s %(message)s',
                         filemode='w'
                         )
-    logging.info("Logging configured.")
+    logger = logging.getLogger('coffeebot')
+    logger.info("logger configured.")
 
 
 
@@ -39,15 +40,15 @@ def initialize_lcd():
     """Initializes the LCD Screen."""
     try:
         lcd = coffeepi_serial_lcd('/dev/ttyAMA0', 19200)
-        logging.info("Initialized LCD Screen.")
+        logger.info("Initialized LCD Screen.")
     except:
-        logging.exception("Failed to initialize the LCD Screen.")
+        logger.exception("Failed to initialize the LCD Screen.")
     return lcd
     
 
 def initialize_coffee_pots():
     """Adds coffee pots to the dictionary COFFEE_POTS."""
-    logging.info("Initializing coffee pot objects.")
+    logger.info("Initializing coffee pot objects.")
     
     try:
         COFFEE_POTS["1"] = coffee_pot("1", 
@@ -63,16 +64,16 @@ def initialize_coffee_pots():
                                         off=50, 
                                         max=100, 
                                         file="coffee_pot_2.txt")
-        logging.info("Coffee pot objects created.")
+        logger.info("Coffee pot objects created.")
     except:
-        logging.exception("Problem when initializing coffee pots.")
+        logger.exception("Problem when initializing coffee pots.")
 
 
 ##THESE ARE EVENT LOOP FUNCTIONS.  They are used to add readings and send them out.
 
 def read_write_sensors():
     """reads values by calling getWeights fron adafruit_mcp3008.  """
-    logging.info("Reading sensors and adding reading to coffee pots.")
+    logger.info("Reading sensors and adding reading to coffee pots.")
     try:
         readings = adafruit_mcp3008.getWeights()
         
@@ -85,9 +86,9 @@ def read_write_sensors():
             if VALID_DATA_MAX < value:
                 value = VALID_DATA_MAX
             COFFEE_POTS[reading].add_reading(value)
-        logging.info("Sensors read and reading set to coffee pots successfully.")
+        logger.info("Sensors read and reading set to coffee pots successfully.")
     except:
-        logging.exception('Error occurred during read and setting values from sensors')
+        logger.exception('Error occurred during read and setting values from sensors')
         
         #Consider here performing a clean exit; then configure the script to respawn if it dies?
 
@@ -95,7 +96,7 @@ def read_write_sensors():
 def build_post_request():
     """builds and returns a customized post request containing coffee pots."""
 
-    logging.info('Setting up data dictionary...')
+    logger.info('Setting up data dictionary...')
     to_post = {"update":[]}
     try:    
         for item in COFFEE_POTS:
@@ -105,17 +106,17 @@ def build_post_request():
             temp_dict["currentLevel"] = COFFEE_POTS[item].get_post_value()
             temp_dict["removed"] = COFFEE_POTS[item].removed
             to_post["update"].append(temp_dict)
-            logging.info('Data dictionary created: %s', 
+            logger.info('Data dictionary created: %s', 
                         to_post["update"])
-        logging.info("Successfully built post request")
+        logger.info("Successfully built post request")
     except:
-        logging.exception("Problem while building post request.")
+        logger.exception("Problem while building post request.")
     return to_post
 
 
 def send_post_request(post_request):
     """sends post_request, provided as the only argument, to the coffeemonitor."""
-    logging.info('Preparing to post data to coffee monitor site...')
+    logger.info('Preparing to post data to coffee monitor site...')
     try:
         url = 'http://coffeemonitor-backstopcoffee.rhcloud.com/pots/update'
         params = json.JSONEncoder().encode(post_request)
@@ -124,9 +125,9 @@ def send_post_request(post_request):
 
         response = urllib2.urlopen(req)
         response.read()
-        logging.info("Successfully sent post request.")
+        logger.info("Successfully sent post request.")
     except urllib2.HTTPError, error:
-        logging.exception('Error occurred while attempting to post an update to the web service')
+        logger.exception('Error occurred while attempting to post an update to the web service')
         contents = error
         contents.read()
 
@@ -142,7 +143,7 @@ def main():
 
     initialize_coffee_pots()
     
-    logging.info('Entering main loop...')    
+    logger.info('Entering main loop...')    
     count = 1
     
     while True:
@@ -159,7 +160,7 @@ def main():
                 lcd.writeToLcd(post_request["update"])
                 count = 1
         except:
-            logging.exception('Error occurred while attempting to process the sensor readings')
+            logger.exception('Error occurred while attempting to process the sensor readings')
         
         count = count + 1
         time.sleep(1)

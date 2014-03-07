@@ -32,14 +32,14 @@ class coffee_pot:
         ZD: We don't really need to filter it, because it is filtered by the data controller."""
         self.values.pop(0)
         self.values.append(value)
-        logging.info("Coffee pot %s is removed? %s", self.name, self.removed)
+        logger.info("Coffee pot %s is removed? %s", self.name, self.removed)
         if value > self.full and self.removed:
             self.lastbrew = time.time()
             self.write_last_brew()
         
         self.removed = value < self.off
         
-        logging.info('Coffee Pot: %s is reading %s', self.name, str(value))
+        logger.info('Coffee Pot: %s is reading %s', self.name, str(value))
 
 		
     """This doesn't look like it will work for a few reasons
@@ -68,20 +68,20 @@ class coffee_pot:
     accurate levels from an inaccurate scale."""
 
     def get_post_value(self):
-        logging.info("geting post value for %s", self.name)
+        logger.info("geting post value for %s", self.name)
         try:
             """this responds with the current level of the pot, in a range from 0-1.  It averages the readings in readings."""
-            logging.info("getting value to post.")
+            logger.info("getting value to post.")
             temp_current_level = float(reduce(lambda x, y: x + y, self.values) / float(len(self.values)))
             
             self.postvalue = float((float(temp_current_level - self.empty)) / (float(int(self.max) - self.empty)))
 
             self.postvalue = min(self.postvalue, 1)
             self.postvalue = max(self.postvalue, 0)
-            logging.info('Coffee Pot: %s post value is %s', self.name, str(self.postvalue))
+            logger.info('Coffee Pot: %s post value is %s', self.name, str(self.postvalue))
             return self.postvalue
         except:
-            logging.exception("Could not calculate a post value for coffe pot %s", self.name)
+            logger.exception("Could not calculate a post value for coffe pot %s", self.name)
 
 
 
@@ -90,29 +90,29 @@ class coffee_pot:
         I didn't think we needed to check the contents, because nothing extra could end up 
         there, and when we write to the file, we us w+ which deletes the content anyway."""
         
-        logging.info("%s is getting an initial value for its last brew time.", self.name)
+        logger.info("%s is getting an initial value for its last brew time.", self.name)
         try:
             if os.path.exists("./" + self.file):
                 last_brew_file = open(self.file, "r")
                 last_brew_file.seek(0)
-                logging.info("last brew time was read from %s.", self.file)
+                logger.info("last brew time was read from %s.", self.file)
                 return float(last_brew_file.readline())
             else:
-                logging.info("last brew time was set to current time, because %s was not detected.", self.file)
+                logger.info("last brew time was set to current time, because %s was not detected.", self.file)
                 return time.time()
 
         except:
-            logging.exception("Error occured when setting initial last brew time for %s.", self.name)
+            logger.exception("Error occured when setting initial last brew time for %s.", self.name)
 
  
     def write_last_brew(self):
         """write_last_brew either opens the existing self.file, deletes the contents and writes time.time()
         or it creates the file """
         
-        logging.info("writing last brew for %s to %s", self.name, self.file)
+        logger.info("writing last brew for %s to %s", self.name, self.file)
         try:
             last_brew_file = open(self.file, 'w+')
             last_brew_file.write(str(time.time()))
-            logging.info("wrote last brew for %s to %s", self.name, self.file)
+            logger.info("wrote last brew for %s to %s", self.name, self.file)
         except:
-            logging.exception("Problem writing last brew for %s to %s", self.name, self.file)
+            logger.exception("Problem writing last brew for %s to %s", self.name, self.file)
