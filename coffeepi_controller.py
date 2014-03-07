@@ -16,7 +16,7 @@ if __name__ == '__main__':
     from coffeepi_serial_lcd import coffeepi_serial_lcd
 
 #defaults for readings off of sensors
-VALID_DATA_MIN = 20
+VALID_DATA_MIN = 50
 VALID_DATA_MAX = 125
 COFFEE_POTS = {}
 
