@@ -56,7 +56,7 @@ def initialize_coffee_pots():
                                         empty=35, 
                                         off=50, 
                                         max=100, 
-                                        file="coffe_pot_1.txt")
+                                        file="coffee_pot_1.txt")
 
         COFFEE_POTS["2"] = coffee_pot("2", 
                                         full=50, 
