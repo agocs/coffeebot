@@ -29,6 +29,7 @@ class coffee_pot:
         formatter = logging.Formatter('%(asctime)s, %(message)s\n')
         fileHandler = logging.FileHandler("coffee_pot_" + self.name + "_log.csv", mode='w')
         fileHandler.setFormatter(formatter)
+        self.measurements.addHandler(fileHandler)
         self.measurements.setLevel('DEBUG')
 
     def add_reading(self, value):
