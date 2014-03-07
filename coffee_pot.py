@@ -40,7 +40,7 @@ class coffee_pot:
         self.values.append(value)
         try:
             self.measurements.info(str(value))
-            ogger.info("Wrote to csv file for coffee pot: %s", self.name)
+            logger.info("Wrote to csv file for coffee pot: %s", self.name)
         except:
             logger.info("Could not write to csv file for coffee pot: %s", self.name)
         logger.info("Coffee pot %s is removed? %s", self.name, self.removed)
