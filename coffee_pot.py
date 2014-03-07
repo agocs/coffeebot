@@ -32,7 +32,7 @@ class coffee_pot:
         ZD: We don't really need to filter it, because it is filtered by the data controller."""
         self.values.pop(0)
         self.values.append(value)
-        
+        logging.info("Coffee pot %s is removed? %s", self.name, self.removed)
         if value > self.full and self.removed:
             self.lastbrew = time.time()
             self.write_last_brew()
