@@ -61,7 +61,7 @@ def initialize_coffee_pots():
                                         off=VALID_DATA_MIN, 
                                         max=VALID_DATA_MAX, 
                                         file="coffee_pot_2.txt")
-        logging.info("Coffe pot objects created.")
+        logging.info("Coffee pot objects created.")
     except:
         logging.exception("Problem when initializing coffee pots.")
 
