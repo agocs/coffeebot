@@ -96,7 +96,7 @@ class coffee_pot:
                 last_brew_file = open(self.file, "r")
                 last_brew_file.seek(0)
                 logging.info("last brew time was read from %s.", self.file)
-                return last_brew_file.readline()
+                return int(last_brew_file.readline())
             else:
                 logging.info("last brew time was set to current time, because %s was not detected.", self.file)
                 return time.time()
