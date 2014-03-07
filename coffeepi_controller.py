@@ -16,7 +16,7 @@ if __name__ == '__main__':
     from coffeepi_serial_lcd import coffeepi_serial_lcd
 
 #defaults for readings off of sensors
-VALID_DATA_MIN = 50
+VALID_DATA_MIN = 10
 VALID_DATA_MAX = 125
 COFFEE_POTS = {}
 
@@ -51,15 +51,15 @@ def initialize_coffee_pots():
         COFFEE_POTS["1"] = coffee_pot("1", 
                                         full=50, 
                                         empty=35, 
-                                        off=VALID_DATA_MIN, 
-                                        max=VALID_DATA_MAX, 
+                                        off=50, 
+                                        max=100, 
                                         file="coffe_pot_1.txt")
 
         COFFEE_POTS["2"] = coffee_pot("2", 
                                         full=50, 
                                         empty=35, 
-                                        off=VALID_DATA_MIN, 
-                                        max=VALID_DATA_MAX, 
+                                        off=50, 
+                                        max=100, 
                                         file="coffee_pot_2.txt")
         logging.info("Coffee pot objects created.")
     except:
