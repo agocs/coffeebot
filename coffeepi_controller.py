@@ -29,10 +29,7 @@ def configure_logging():
     logging.basicConfig(file='coffee_bot_3000.log', 
                         level=10, 
                         format='%(asctime)s %(levelname)s %(message)s',
-                        filemode='w'
-                        )
-    logger = logging.getLogger('coffeebot')
-    logger.info("logger configured.")
+                        filemode='w')
 
 
 
@@ -138,7 +135,9 @@ def main():
 
 
     configure_logging()
-
+    logger = logging.getLogger('coffeebot')
+    logger.info("logger configured.")
+    
     lcd = initialize_lcd()
 
     initialize_coffee_pots()
