@@ -2,6 +2,7 @@ import logging
 import time
 import os
 
+logger = logging.getLogger('coffeebot')
 
 class coffee_pot:
     """this is a coffee_pot.
