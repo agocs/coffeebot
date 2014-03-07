@@ -49,14 +49,14 @@ def initialize_coffee_pots():
     
     try:
         COFFEE_POTS["1"] = coffee_pot("1", 
-                                        full=70, 
+                                        full=50, 
                                         empty=35, 
                                         off=VALID_DATA_MIN, 
                                         max=VALID_DATA_MAX, 
                                         file="coffe_pot_1.txt")
 
         COFFEE_POTS["2"] = coffee_pot("2", 
-                                        full=70, 
+                                        full=50, 
                                         empty=35, 
                                         off=VALID_DATA_MIN, 
                                         max=VALID_DATA_MAX, 
