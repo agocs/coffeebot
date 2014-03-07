@@ -20,7 +20,9 @@ VALID_DATA_MIN = 10
 VALID_DATA_MAX = 125
 COFFEE_POTS = {}
 
-
+configure_logging()
+logger = logging.getLogger('coffeebot')
+logger.info("logger configured.")
 
 
 ## THESE ARE SET UP FUNCTIONS.  They prepare for the main loop.
@@ -131,12 +133,6 @@ def send_post_request(post_request):
 
 def main():
     """Main event loop."""
-    
-
-
-    configure_logging()
-    logger = logging.getLogger('coffeebot')
-    logger.info("logger configured.")
     
     lcd = initialize_lcd()
 
