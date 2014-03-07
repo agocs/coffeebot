@@ -25,6 +25,11 @@ class coffee_pot:
         self.max = max
         self.file = file
         self.lastbrew = self.get_last_brew()
+        self.measurements = logging.getLogger("measurements")
+        formatter = logging.Formatter('%(asctime)s, %(message)s\n')
+        fileHandler = logging.FileHandler("coffee_pot_" + self.name + "_log.csv", mode='w')
+        fileHandler.setFormatter(formatter)
+        self.measurements.setLevel('DEBUG')
 
     def add_reading(self, value):
         """adds a reading to self.values, and removes the oldest."""
@@ -33,6 +38,7 @@ class coffee_pot:
         ZD: We don't really need to filter it, because it is filtered by the data controller."""
         self.values.pop(0)
         self.values.append(value)
+        self.measurements.info(str(value))
         logger.info("Coffee pot %s is removed? %s", self.name, self.removed)
         if value > self.full and self.removed:
             self.lastbrew = time.time()

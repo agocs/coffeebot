@@ -10,6 +10,7 @@ from coffee_pot import coffee_pot
 import time
 import urllib2
 import json
+import csv
 
 if __name__ == '__main__':
     import adafruit_mcp3008
@@ -34,7 +35,6 @@ def configure_logging():
 configure_logging()
 logger = logging.getLogger('coffeebot')
 logger.info("logger configured.")
-
 
 def initialize_lcd():
     """Initializes the LCD Screen."""
