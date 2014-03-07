@@ -27,7 +27,7 @@ COFFEE_POTS = {}
 def configure_logging():
     """Sets up the basic configuration for loggin."""
     logging.basicConfig(file='coffee_bot_3000.log', 
-                        level=logging.DEBUG, 
+                        level=30, 
                         format='%(asctime)s %(levelname)s %(message)s')
     logging.info("Logging configured.")
 
