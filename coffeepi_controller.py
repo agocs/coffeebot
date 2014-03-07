@@ -20,9 +20,7 @@ VALID_DATA_MIN = 10
 VALID_DATA_MAX = 125
 COFFEE_POTS = {}
 
-configure_logging()
-logger = logging.getLogger('coffeebot')
-logger.info("logger configured.")
+
 
 
 ## THESE ARE SET UP FUNCTIONS.  They prepare for the main loop.
@@ -33,6 +31,9 @@ def configure_logging():
                         format='%(asctime)s %(levelname)s %(message)s',
                         filemode='w')
 
+configure_logging()
+logger = logging.getLogger('coffeebot')
+logger.info("logger configured.")
 
 
 def initialize_lcd():
