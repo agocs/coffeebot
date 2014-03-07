@@ -38,7 +38,11 @@ class coffee_pot:
         ZD: We don't really need to filter it, because it is filtered by the data controller."""
         self.values.pop(0)
         self.values.append(value)
-        self.measurements.info(str(value))
+        try:
+            self.measurements.info(str(value))
+            ogger.info("Wrote to csv file for coffee pot: %s", self.name)
+        except:
+            logger.info("Could not write to csv file for coffee pot: %s", self.name)
         logger.info("Coffee pot %s is removed? %s", self.name, self.removed)
         if value > self.full and self.removed:
             self.lastbrew = time.time()
