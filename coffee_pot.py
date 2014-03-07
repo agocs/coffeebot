@@ -25,7 +25,7 @@ class coffee_pot:
         self.max = max
         self.file = file
         self.lastbrew = self.get_last_brew()
-        self.measurements = logging.getLogger("measurements")
+        self.measurements = logging.getLogger(self.name)
         formatter = logging.Formatter('%(asctime)s, %(message)s\n')
         fileHandler = logging.FileHandler("coffee_pot_" + self.name + "_log.csv", mode='w')
         fileHandler.setFormatter(formatter)
