@@ -38,7 +38,7 @@ class coffee_pot:
         
         self.removed = value < self.off
         
-        storm.send(('Coffee Pot: %s is reading %s', self.name, str(value)), sourcetype = 'syslog', host = self.name)
+        storm.send(str(value), sourcetype = 'syslog', host = self.name)
 
 		
     """This doesn't look like it will work for a few reasons
@@ -67,20 +67,20 @@ class coffee_pot:
     accurate levels from an inaccurate scale."""
 
     def get_post_value(self):
-        storm.send(("geting post value for %s", self.name), sourcetype = 'sysact', host = self.name)
+        #storm.send(("geting post value for %s", self.name), sourcetype = 'sysact', host = self.name)
         try:
             """this responds with the current level of the pot, in a range from 0-1.  It averages the readings in readings."""
-            storm.send("getting value to post.", sourcetype = syslog, host = self.name)
+            #storm.send("getting value to post.", sourcetype = syslog, host = self.name)
             temp_current_level = float(reduce(lambda x, y: x + y, self.values) / float(len(self.values)))
             
             self.postvalue = float((float(temp_current_level - self.empty)) / (float(int(self.max) - self.empty)))
 
             self.postvalue = min(self.postvalue, 1)
             self.postvalue = max(self.postvalue, 0)
-            storm.send(('Coffee Pot: %s post value is %s', self.name, str(self.postvalue)), sourcetype = 'sysact', host = self.name)
+            #storm.send(('Coffee Pot: %s post value is %s', self.name, str(self.postvalue)), sourcetype = 'sysact', host = self.name)
             return self.postvalue
         except:
-            storm.send(("Could not calculate a post value for coffe pot %s", self.name), sourcetype = 'sysact', host = self.name)
+            storm.send("Could not calculate a post value for coffe pot " + self.name, sourcetype = 'sysact', host = self.name)
 
 
 
@@ -89,29 +89,29 @@ class coffee_pot:
         I didn't think we needed to check the contents, because nothing extra could end up 
         there, and when we write to the file, we us w+ which deletes the content anyway."""
         
-        storm.send(("%s is getting an initial value for its last brew time.", self.name), sourcetype = 'sysact', host = self.name)
+        #storm.send(self.name + " is getting an initial value for its last brew time.", sourcetype = 'sysact', host = self.name)
         try:
             if os.path.exists("./" + self.file):
                 last_brew_file = open(self.file, "r")
                 last_brew_file.seek(0)
-                storm.send(("last brew time was read from %s.", self.file), sourcetype = 'sysact', host = self.name)
+                #storm.send(("last brew time was read from %s.", self.file), sourcetype = 'sysact', host = self.name)
                 return float(last_brew_file.readline())
             else:
-                storm.send(("last brew time was set to current time, because %s was not detected.", self.file), sourcetype = 'sysact', host = self.name)
+                #storm.send("last brew time was set to current time, because" + self.file + "was not detected.", sourcetype = 'sysact', host = self.name)
                 return time.time()
 
         except:
-            storm.send(("Error occured when setting initial last brew time for %s.", self.name), sourcetype = 'sysact', host = self.name)
+            storm.send("Error occured when setting initial last brew time for" + self.name, sourcetype = 'sysact', host = self.name)
 
  
     def write_last_brew(self):
         """write_last_brew either opens the existing self.file, deletes the contents and writes time.time()
         or it creates the file """
         
-        storm.send(("writing last brew for %s to %s", self.name, self.file), sourcetype = 'sysact', host = self.name)
+        #storm.send(("writing last brew for %s to %s", self.name, self.file), sourcetype = 'sysact', host = self.name)
         try:
             last_brew_file = open(self.file, 'w+')
             last_brew_file.write(str(time.time()))
-            storm.send(("wrote last brew for %s to %s", self.name, self.file), sourcetype = 'sysact', host = self.name)
+            #storm.send(("wrote last brew for %s to %s", self.name, self.file), sourcetype = 'sysact', host = self.name)
         except:
-            storm.send(("Problem writing last brew for %s to %s", self.name, self.file), sourcetype = 'sysact', host = self.name)
+            storm.send("Problem writing last brew for" + self.name +" to " + self.file, sourcetype = 'sysact', host = self.name)

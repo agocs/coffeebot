@@ -29,7 +29,7 @@ def initialize_lcd():
     """Initializes the LCD Screen."""
     try:
         lcd = coffeepi_serial_lcd('/dev/ttyAMA0', 19200)
-        storm.send("Initialized LCD Screen.", sourcetype = 'syslog', host = 'controller')
+        #storm.send("Initialized LCD Screen.", sourcetype = 'syslog', host = 'controller')
     except:
         storm.send("Failed to initialize the LCD Screen.", sourcetype = 'syslog', host = 'controller')
     return lcd
@@ -37,7 +37,7 @@ def initialize_lcd():
 
 def initialize_coffee_pots():
     """Adds coffee pots to the dictionary COFFEE_POTS."""
-    storm.send("Initializing coffee pot objects.", sourcetype = 'syslog', host = 'controller')
+    #storm.send("Initializing coffee pot objects.", sourcetype = 'syslog', host = 'controller')
     
     try:
         COFFEE_POTS["1"] = coffee_pot("1", 
@@ -62,7 +62,7 @@ def initialize_coffee_pots():
 
 def read_write_sensors():
     """reads values by calling getWeights fron adafruit_mcp3008.  """
-    storm.send("Reading sensors and adding reading to coffee pots.", sourcetype = 'syslog', host = 'controller')
+    #storm.send("Reading sensors and adding reading to coffee pots.", sourcetype = 'syslog', host = 'controller')
     try:
         readings = adafruit_mcp3008.getWeights()
         
@@ -75,7 +75,7 @@ def read_write_sensors():
             if VALID_DATA_MAX < value:
                 value = VALID_DATA_MAX
             COFFEE_POTS[reading].add_reading(value)
-        storm.send("Sensors read and reading set to coffee pots successfully.", sourcetype = 'syslog', host = 'controller')
+        #storm.send("Sensors read and reading set to coffee pots successfully.", sourcetype = 'syslog', host = 'controller')
     except:
         storm.send('Error occurred during read and setting values from sensors', sourcetype = 'syslog', host = 'controller')
         
@@ -85,7 +85,7 @@ def read_write_sensors():
 def build_post_request():
     """builds and returns a customized post request containing coffee pots."""
 
-    storm.send('Setting up data dictionary...', sourcetype = 'syslog', host = 'controller')
+    #storm.send('Setting up data dictionary...', sourcetype = 'syslog', host = 'controller')
     to_post = {"update":[]}
     try:    
         for item in COFFEE_POTS:
@@ -95,8 +95,8 @@ def build_post_request():
             temp_dict["currentLevel"] = COFFEE_POTS[item].get_post_value()
             temp_dict["removed"] = COFFEE_POTS[item].removed
             to_post["update"].append(temp_dict)
-        storm.send('Data dictionary created:' + str(to_post["update"]), sourcetype = 'syslog', host = 'controller')
-        storm.send("Successfully built post request", sourcetype = 'syslog', host = 'controller')
+        #storm.send('Data dictionary created:' + str(to_post["update"]), sourcetype = 'syslog', host = 'controller')
+        #storm.send("Successfully built post request", sourcetype = 'syslog', host = 'controller')
     except:
         storm.send("Problem while building post request.", sourcetype = 'syslog', host = 'controller')
     return to_post
@@ -104,7 +104,7 @@ def build_post_request():
 
 def send_post_request(post_request):
     """sends post_request, provided as the only argument, to the coffeemonitor."""
-    storm.send('Preparing to post data to coffee monitor site...', sourcetype = 'syslog', host = 'controller')
+    #storm.send('Preparing to post data to coffee monitor site...', sourcetype = 'syslog', host = 'controller')
     try:
         url = 'http://coffeemonitor-backstopcoffee.rhcloud.com/pots/update'
         params = json.JSONEncoder().encode(post_request)
@@ -113,7 +113,7 @@ def send_post_request(post_request):
 
         response = urllib2.urlopen(req)
         response.read()
-        storm.send("Successfully sent post request.", sourcetype = 'syslog', host = 'controller')
+        storm.send("Successfully sent post request: " + params, sourcetype = 'syslog', host = 'controller')
     except urllib2.HTTPError, error:
         storm.send('Error occurred while attempting to post an update to the web service', sourcetype = 'syslog', host = 'controller')
         contents = error
