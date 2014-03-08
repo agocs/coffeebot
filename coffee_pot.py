@@ -81,7 +81,7 @@ class coffee_pot:
             #storm.send(('Coffee Pot: %s post value is %s', self.name, str(self.postvalue)), sourcetype = 'sysact', host = self.name)
             return self.postvalue
         except:
-            storm.send("Could not calculate a post value for coffe pot " + self.name, sourcetype = 'sysact', host = self.name)
+            storm.send("ERROR Could not calculate a post value for coffe pot " + self.name, sourcetype = 'sysact', host = self.name)
 
 
 
@@ -102,7 +102,7 @@ class coffee_pot:
                 return time.time()
 
         except:
-            storm.send("Error occured when setting initial last brew time for" + self.name, sourcetype = 'sysact', host = self.name)
+            storm.send("ERROR occured when setting initial last brew time for" + self.name, sourcetype = 'sysact', host = self.name)
 
  
     def write_last_brew(self):
@@ -115,4 +115,4 @@ class coffee_pot:
             last_brew_file.write(str(time.time()))
             #storm.send(("wrote last brew for %s to %s", self.name, self.file), sourcetype = 'sysact', host = self.name)
         except:
-            storm.send("Problem writing last brew for" + self.name +" to " + self.file, sourcetype = 'sysact', host = self.name)
+            storm.send("ERROR Problem writing last brew for" + self.name +" to " + self.file, sourcetype = 'sysact', host = self.name)

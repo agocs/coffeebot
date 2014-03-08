@@ -31,7 +31,7 @@ def initialize_lcd():
         lcd = coffeepi_serial_lcd('/dev/ttyAMA0', 19200)
         #storm.send("Initialized LCD Screen.", sourcetype = 'syslog', host = 'controller')
     except:
-        storm.send("Failed to initialize the LCD Screen.", sourcetype = 'syslog', host = 'controller')
+        storm.send("ERROR Failed to initialize the LCD Screen.", sourcetype = 'syslog', host = 'controller')
     return lcd
     
 
@@ -55,7 +55,7 @@ def initialize_coffee_pots():
                                         file="coffee_pot_2.txt")
         storm.send("Coffee pot objects created.", sourcetype = 'syslog', host = 'controller')
     except:
-        storm.send("Problem when initializing coffee pots.", sourcetype = 'syslog', host = 'controller')
+        storm.send("ERROR Problem when initializing coffee pots.", sourcetype = 'syslog', host = 'controller')
 
 
 ##THESE ARE EVENT LOOP FUNCTIONS.  They are used to add readings and send them out.
@@ -77,7 +77,7 @@ def read_write_sensors():
             COFFEE_POTS[reading].add_reading(value)
         #storm.send("Sensors read and reading set to coffee pots successfully.", sourcetype = 'syslog', host = 'controller')
     except:
-        storm.send('Error occurred during read and setting values from sensors', sourcetype = 'syslog', host = 'controller')
+        storm.send('ERROR occurred during read and setting values from sensors', sourcetype = 'syslog', host = 'controller')
         
         #Consider here performing a clean exit; then configure the script to respawn if it dies?
 
@@ -98,7 +98,7 @@ def build_post_request():
         #storm.send('Data dictionary created:' + str(to_post["update"]), sourcetype = 'syslog', host = 'controller')
         #storm.send("Successfully built post request", sourcetype = 'syslog', host = 'controller')
     except:
-        storm.send("Problem while building post request.", sourcetype = 'syslog', host = 'controller')
+        storm.send("ERROR Problem while building post request.", sourcetype = 'syslog', host = 'controller')
     return to_post
 
 
@@ -115,7 +115,7 @@ def send_post_request(post_request):
         response.read()
         storm.send("Successfully sent post request: " + params, sourcetype = 'syslog', host = 'controller')
     except urllib2.HTTPError, error:
-        storm.send('Error occurred while attempting to post an update to the web service', sourcetype = 'syslog', host = 'controller')
+        storm.send('ERROR occurred while attempting to post an update to the web service', sourcetype = 'syslog', host = 'controller')
         contents = error
         contents.read()
 
@@ -144,7 +144,7 @@ def main():
                 lcd.writeToLcd(post_request["update"])
                 count = 1
         except:
-            storm.send('Error occurred while attempting to process the sensor readings', sourcetype = 'syslog', host = 'controller')
+            storm.send('ERROR occurred while attempting to process the sensor readings', sourcetype = 'syslog', host = 'controller')
         
         count = count + 1
         time.sleep(1)
