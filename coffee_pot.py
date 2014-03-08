@@ -112,6 +112,6 @@ class coffee_pot:
         try:
             last_brew_file = open(self.file, 'w+')
             last_brew_file.write(str(time.time()))
-            storm.send(("wrote last brew for %s to %s", self.name, self.file),, sourcetype = 'sysact', host = self.name)
+            storm.send(("wrote last brew for %s to %s", self.name, self.file), sourcetype = 'sysact', host = self.name)
         except:
             storm.send(("Problem writing last brew for %s to %s", self.name, self.file), sourcetype = 'sysact', host = self.name)
