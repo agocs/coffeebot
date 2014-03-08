@@ -95,8 +95,7 @@ def build_post_request():
             temp_dict["currentLevel"] = COFFEE_POTS[item].get_post_value()
             temp_dict["removed"] = COFFEE_POTS[item].removed
             to_post["update"].append(temp_dict)
-            storm.send(('Data dictionary created: %s', 
-                        to_post["update"]), sourcetype = 'syslog', host = 'controller')
+            storm.send('Data dictionary created:' + str(to_post["update"], sourcetype = 'syslog', host = 'controller')
         storm.send("Successfully built post request", sourcetype = 'syslog', host = 'controller')
     except:
         storm.send("Problem while building post request.", sourcetype = 'syslog', host = 'controller')
