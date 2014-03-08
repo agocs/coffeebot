@@ -5,12 +5,11 @@ this module is the data controller for the coffeebot!"""
 #!/usr/bin/env python
 #This is the controller for our CoffeePi
 from __future__ import division
-import logging
 from coffee_pot import coffee_pot
 import time
 import urllib2
 import json
-import csv
+from storm_log import *
 
 if __name__ == '__main__':
     import adafruit_mcp3008
@@ -25,30 +24,20 @@ COFFEE_POTS = {}
 
 
 ## THESE ARE SET UP FUNCTIONS.  They prepare for the main loop.
-def configure_logging():
-    """Sets up the basic configuration for logging."""
-    logging.basicConfig(file='coffee_bot_3000.log', 
-                        level="ERROR", 
-                        format='%(asctime)s %(levelname)s %(message)s',
-                        filemode='w')
-
-configure_logging()
-logger = logging.getLogger('coffeebot')
-logger.info("logger configured.")
 
 def initialize_lcd():
     """Initializes the LCD Screen."""
     try:
         lcd = coffeepi_serial_lcd('/dev/ttyAMA0', 19200)
-        logger.info("Initialized LCD Screen.")
+        storm.send("Initialized LCD Screen.", sourcetype = 'syslog', host = 'controller')
     except:
-        logger.exception("Failed to initialize the LCD Screen.")
+        storm.send("Failed to initialize the LCD Screen.", sourcetype = 'syslog', host = 'controller')
     return lcd
     
 
 def initialize_coffee_pots():
     """Adds coffee pots to the dictionary COFFEE_POTS."""
-    logger.info("Initializing coffee pot objects.")
+    storm.send("Initializing coffee pot objects.", sourcetype = 'syslog', host = 'controller')
     
     try:
         COFFEE_POTS["1"] = coffee_pot("1", 
@@ -64,16 +53,16 @@ def initialize_coffee_pots():
                                         off=50, 
                                         max=100, 
                                         file="coffee_pot_2.txt")
-        logger.info("Coffee pot objects created.")
+        storm.send("Coffee pot objects created.", sourcetype = 'syslog', host = 'controller')
     except:
-        logger.exception("Problem when initializing coffee pots.")
+        storm.send("Problem when initializing coffee pots.", sourcetype = 'syslog', host = 'controller')
 
 
 ##THESE ARE EVENT LOOP FUNCTIONS.  They are used to add readings and send them out.
 
 def read_write_sensors():
     """reads values by calling getWeights fron adafruit_mcp3008.  """
-    logger.info("Reading sensors and adding reading to coffee pots.")
+    storm.send("Reading sensors and adding reading to coffee pots.", sourcetype = 'syslog', host = 'controller')
     try:
         readings = adafruit_mcp3008.getWeights()
         
@@ -86,9 +75,9 @@ def read_write_sensors():
             if VALID_DATA_MAX < value:
                 value = VALID_DATA_MAX
             COFFEE_POTS[reading].add_reading(value)
-        logger.info("Sensors read and reading set to coffee pots successfully.")
+        storm.send("Sensors read and reading set to coffee pots successfully.", sourcetype = 'syslog', host = 'controller')
     except:
-        logger.exception('Error occurred during read and setting values from sensors')
+        storm.send('Error occurred during read and setting values from sensors', sourcetype = 'syslog', host = 'controller')
         
         #Consider here performing a clean exit; then configure the script to respawn if it dies?
 
@@ -96,7 +85,7 @@ def read_write_sensors():
 def build_post_request():
     """builds and returns a customized post request containing coffee pots."""
 
-    logger.info('Setting up data dictionary...')
+    storm.send('Setting up data dictionary...', sourcetype = 'syslog', host = 'controller')
     to_post = {"update":[]}
     try:    
         for item in COFFEE_POTS:
@@ -106,17 +95,17 @@ def build_post_request():
             temp_dict["currentLevel"] = COFFEE_POTS[item].get_post_value()
             temp_dict["removed"] = COFFEE_POTS[item].removed
             to_post["update"].append(temp_dict)
-            logger.info('Data dictionary created: %s', 
-                        to_post["update"])
-        logger.info("Successfully built post request")
+            storm.send(('Data dictionary created: %s', 
+                        to_post["update"]), sourcetype = 'syslog', host = 'controller')
+        storm.send("Successfully built post request", sourcetype = 'syslog', host = 'controller')
     except:
-        logger.exception("Problem while building post request.")
+        storm.send("Problem while building post request.", sourcetype = 'syslog', host = 'controller')
     return to_post
 
 
 def send_post_request(post_request):
     """sends post_request, provided as the only argument, to the coffeemonitor."""
-    logger.info('Preparing to post data to coffee monitor site...')
+    storm.send('Preparing to post data to coffee monitor site...', sourcetype = 'syslog', host = 'controller')
     try:
         url = 'http://coffeemonitor-backstopcoffee.rhcloud.com/pots/update'
         params = json.JSONEncoder().encode(post_request)
@@ -125,9 +114,9 @@ def send_post_request(post_request):
 
         response = urllib2.urlopen(req)
         response.read()
-        logger.info("Successfully sent post request.")
+        storm.send("Successfully sent post request.", sourcetype = 'syslog', host = 'controller')
     except urllib2.HTTPError, error:
-        logger.exception('Error occurred while attempting to post an update to the web service')
+        storm.send('Error occurred while attempting to post an update to the web service', sourcetype = 'syslog', host = 'controller')
         contents = error
         contents.read()
 
@@ -139,7 +128,7 @@ def main():
 
     initialize_coffee_pots()
     
-    logger.info('Entering main loop...')    
+    storm.send('Entering main loop...', sourcetype = 'syslog', host = 'controller')    
     count = 1
     
     while True:
@@ -156,7 +145,7 @@ def main():
                 lcd.writeToLcd(post_request["update"])
                 count = 1
         except:
-            logger.exception('Error occurred while attempting to process the sensor readings')
+            storm.send('Error occurred while attempting to process the sensor readings', sourcetype = 'syslog', host = 'controller')
         
         count = count + 1
         time.sleep(1)
