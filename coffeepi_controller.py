@@ -1,3 +1,4 @@
+
 """This is the module DocString!  It contains important information 
 about what this module does.  For instance, 
 this module is the data controller for the coffeebot!"""
@@ -9,6 +10,8 @@ from coffee_pot import coffee_pot
 import time
 import urllib2
 import json
+import traceback
+import sys
 from storm_log import *
 
 if __name__ == '__main__':
@@ -79,8 +82,11 @@ def read_write_sensors():
             try:
                 COFFEE_POTS[reading].add_reading(value)    
             except:
-                storm.send('ERROR occured while trying to add readings to coffee pots.')
-            
+                storm.send('ERROR occured while trying to add readings to coffee pots.'
+                            + "\n"
+                            + traceback.format_exc()
+                    )
+                
         #storm.send("Sensors read and reading set to coffee pots successfully.", sourcetype = 'syslog', host = 'controller')
     except:
         storm.send('ERROR occurred during read and setting values from sensors', sourcetype = 'syslog', host = 'controller')

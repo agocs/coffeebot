@@ -1,7 +1,7 @@
 from storm_log import *
 import time
 import os
-
+import traceback
 
 class coffee_pot:
     """this is a coffee_pot.
