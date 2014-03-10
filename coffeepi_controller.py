@@ -64,8 +64,10 @@ def read_write_sensors():
     """reads values by calling getWeights fron adafruit_mcp3008.  """
     #storm.send("Reading sensors and adding reading to coffee pots.", sourcetype = 'syslog', host = 'controller')
     try:
-        readings = adafruit_mcp3008.getWeights()
-        
+        try:
+            readings = adafruit_mcp3008.getWeights()
+        except:
+            storm.send("ERROR occured in the getWeights() function in file adafruit_mcp3008")
         for reading in readings:
             value = readings[reading]
             
@@ -74,7 +76,11 @@ def read_write_sensors():
                 
             if VALID_DATA_MAX < value:
                 value = VALID_DATA_MAX
-            COFFEE_POTS[reading].add_reading(value)
+            try:
+                COFFEE_POTS[reading].add_reading(value)    
+            except:
+                storm.send('ERROR occured while trying to add readings to coffee pots.')
+            
         #storm.send("Sensors read and reading set to coffee pots successfully.", sourcetype = 'syslog', host = 'controller')
     except:
         storm.send('ERROR occurred during read and setting values from sensors', sourcetype = 'syslog', host = 'controller')
