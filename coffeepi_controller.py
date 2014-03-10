@@ -157,7 +157,10 @@ def main():
                 lcd.writeToLcd(post_request["update"])
                 count = 1
         except:
-            storm.send('ERROR occurred while attempting to process the sensor readings', sourcetype = 'syslog', host = 'controller')
+            storm.send('ERROR occurred while attempting to process the sensor readings', sourcetype = 'syslog', host = 'controller'
+                            + "\n Traceback:"
+                            + traceback.format_exc()
+                    )
         
         count = count + 1
         time.sleep(1)
