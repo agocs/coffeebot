@@ -82,9 +82,9 @@ def read_write_sensors():
             try:
                 COFFEE_POTS[reading].add_reading(value)    
             except:
-                storm.send('ERROR occured while trying to add readings to coffee pots.'
+                storm.send(('ERROR occured while trying to add readings to coffee pots.'
                             + "\n Traceback:"
-                            + traceback.format_exc()
+                            + traceback.format_exc()), sourcetype='log4j', host='controller'
                     )
                 
         #storm.send("Sensors read and reading set to coffee pots successfully.", sourcetype = 'syslog', host = 'controller')
@@ -157,7 +157,7 @@ def main():
                 lcd.writeToLcd(post_request["update"])
                 count = 1
         except:
-            storm.send('ERROR occurred while attempting to process the sensor readings', sourcetype = 'syslog', host = 'controller'
+            storm.send('ERROR occurred while attempting to process the sensor readings', sourcetype = 'log4j', host = 'controller'
                             + "\n Traceback:"
                             + traceback.format_exc()
                     )

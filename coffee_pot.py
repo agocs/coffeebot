@@ -33,7 +33,7 @@ class coffee_pot:
         self.values.pop(0)
         self.values.append(value)
         if value > self.full and self.removed:
-            storm.send("New Brew!", sourcetype = syslog, host = self.name)
+            storm.send("New Brew!", sourcetype = 'syslog', host = self.name)
             self.lastbrew = time.time()
             self.write_last_brew()
         
