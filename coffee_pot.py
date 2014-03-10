@@ -39,7 +39,7 @@ class coffee_pot:
         
         self.removed = value < self.off
         
-        storm.send(str(value), sourcetype = 'syslog', host = self.name)
+
 
 		
     """This doesn't look like it will work for a few reasons
