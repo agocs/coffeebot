@@ -37,4 +37,4 @@ class StormLog(object):
 # Example
 # Setup the example logger
 # Arguments are your access token and the project ID
-log = StormLog(ACCESS_TOKEN, PROJECT_ID)
+storm = StormLog(ACCESS_TOKEN, PROJECT_ID)

@@ -1,8 +1,7 @@
-import logging
+from storm_log import *
 import time
 import os
-
-logger = logging.getLogger('coffeebot')
+import traceback
 
 class coffee_pot:
     """this is a coffee_pot.
@@ -25,12 +24,6 @@ class coffee_pot:
         self.max = max
         self.file = file
         self.lastbrew = self.get_last_brew()
-        self.measurements = logging.getLogger(self.name)
-        formatter = logging.Formatter('%(asctime)s, %(message)s\n')
-        fileHandler = logging.FileHandler("coffee_pot_" + self.name + "_log.csv", mode='w')
-        fileHandler.setFormatter(formatter)
-        self.measurements.addHandler(fileHandler)
-        self.measurements.setLevel('DEBUG')
 
     def add_reading(self, value):
         """adds a reading to self.values, and removes the oldest."""
@@ -39,19 +32,14 @@ class coffee_pot:
         ZD: We don't really need to filter it, because it is filtered by the data controller."""
         self.values.pop(0)
         self.values.append(value)
-        try:
-            self.measurements.info(str(value))
-            logger.info("Wrote to csv file for coffee pot: %s", self.name)
-        except:
-            logger.info("Could not write to csv file for coffee pot: %s", self.name)
-        logger.info("Coffee pot %s is removed? %s", self.name, self.removed)
         if value > self.full and self.removed:
+            storm.send("New Brew!", sourcetype = syslog, host = self.name)
             self.lastbrew = time.time()
             self.write_last_brew()
         
         self.removed = value < self.off
         
-        logger.info('Coffee Pot: %s is reading %s', self.name, str(value))
+        storm.send(str(value), sourcetype = 'syslog', host = self.name)
 
 		
     """This doesn't look like it will work for a few reasons
@@ -80,20 +68,20 @@ class coffee_pot:
     accurate levels from an inaccurate scale."""
 
     def get_post_value(self):
-        logger.info("geting post value for %s", self.name)
+        #storm.send(("geting post value for %s", self.name), sourcetype = 'sysact', host = self.name)
         try:
             """this responds with the current level of the pot, in a range from 0-1.  It averages the readings in readings."""
-            logger.info("getting value to post.")
+            #storm.send("getting value to post.", sourcetype = syslog, host = self.name)
             temp_current_level = float(reduce(lambda x, y: x + y, self.values) / float(len(self.values)))
             
             self.postvalue = float((float(temp_current_level - self.empty)) / (float(int(self.max) - self.empty)))
 
             self.postvalue = min(self.postvalue, 1)
             self.postvalue = max(self.postvalue, 0)
-            logger.info('Coffee Pot: %s post value is %s', self.name, str(self.postvalue))
+            #storm.send(('Coffee Pot: %s post value is %s', self.name, str(self.postvalue)), sourcetype = 'sysact', host = self.name)
             return self.postvalue
         except:
-            logger.exception("Could not calculate a post value for coffe pot %s", self.name)
+            storm.send("ERROR Could not calculate a post value for coffe pot " + self.name, sourcetype = 'sysact', host = self.name)
 
 
 
@@ -102,29 +90,29 @@ class coffee_pot:
         I didn't think we needed to check the contents, because nothing extra could end up 
         there, and when we write to the file, we us w+ which deletes the content anyway."""
         
-        logger.info("%s is getting an initial value for its last brew time.", self.name)
+        #storm.send(self.name + " is getting an initial value for its last brew time.", sourcetype = 'sysact', host = self.name)
         try:
             if os.path.exists("./" + self.file):
                 last_brew_file = open(self.file, "r")
                 last_brew_file.seek(0)
-                logger.info("last brew time was read from %s.", self.file)
+                #storm.send(("last brew time was read from %s.", self.file), sourcetype = 'sysact', host = self.name)
                 return float(last_brew_file.readline())
             else:
-                logger.info("last brew time was set to current time, because %s was not detected.", self.file)
+                #storm.send("last brew time was set to current time, because" + self.file + "was not detected.", sourcetype = 'sysact', host = self.name)
                 return time.time()
 
         except:
-            logger.exception("Error occured when setting initial last brew time for %s.", self.name)
+            storm.send("ERROR occured when setting initial last brew time for" + self.name, sourcetype = 'sysact', host = self.name)
 
  
     def write_last_brew(self):
         """write_last_brew either opens the existing self.file, deletes the contents and writes time.time()
         or it creates the file """
         
-        logger.info("writing last brew for %s to %s", self.name, self.file)
+        #storm.send(("writing last brew for %s to %s", self.name, self.file), sourcetype = 'sysact', host = self.name)
         try:
             last_brew_file = open(self.file, 'w+')
             last_brew_file.write(str(time.time()))
-            logger.info("wrote last brew for %s to %s", self.name, self.file)
+            #storm.send(("wrote last brew for %s to %s", self.name, self.file), sourcetype = 'sysact', host = self.name)
         except:
-            logger.exception("Problem writing last brew for %s to %s", self.name, self.file)
+            storm.send("ERROR Problem writing last brew for" + self.name +" to " + self.file, sourcetype = 'sysact', host = self.name)
