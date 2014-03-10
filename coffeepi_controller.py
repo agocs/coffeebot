@@ -83,7 +83,7 @@ def read_write_sensors():
                 COFFEE_POTS[reading].add_reading(value)    
             except:
                 storm.send('ERROR occured while trying to add readings to coffee pots.'
-                            + "\n"
+                            + "\n Traceback:"
                             + traceback.format_exc()
                     )
                 
