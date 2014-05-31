@@ -11,7 +11,6 @@ import time
 import urllib2
 import json
 import traceback
-import sys
 from storm_log import *
 
 if __name__ == '__main__':
@@ -36,7 +35,7 @@ def initialize_lcd():
     except:
         storm.send("ERROR Failed to initialize the LCD Screen."
                             + "\n Traceback:"
-                            + traceback.format_exc()), sourcetype='log4j', host='controller')
+                            + traceback.format_exc(), sourcetype='log4j', host='controller')
     return lcd
 
 
@@ -60,9 +59,9 @@ def initialize_coffee_pots():
                                         file="coffee_pot_2.txt")
         storm.send("Coffee pot objects created.", sourcetype = 'syslog', host = 'controller')
     except:
-        storm.send("ERROR Problem when initializing coffee pots.",
+        storm.send("ERROR Problem when initializing coffee pots."
                             + "\n Traceback:"
-                            + traceback.format_exc()), sourcetype='log4j', host='controller'))
+                            + traceback.format_exc(), sourcetype='log4j', host='controller')
 
 
 ##THESE ARE EVENT LOOP FUNCTIONS.  They are used to add readings and send them out.
@@ -86,16 +85,15 @@ def read_write_sensors():
             try:
                 COFFEE_POTS[reading].add_reading(value)
             except:
-                storm.send(('ERROR occured while trying to add readings to coffee pots.'
+                storm.send('ERROR occured while trying to add readings to coffee pots.'
                             + "\n Traceback:"
-                            + traceback.format_exc()), sourcetype='log4j', host='controller'
-                    )
+                            + traceback.format_exc(), sourcetype='log4j', host='controller')
 
         #storm.send("Sensors read and reading set to coffee pots successfully.", sourcetype = 'syslog', host = 'controller')
     except:
         storm.send('ERROR occurred during read and setting values from sensors'
                             + "\n Traceback:"
-                            + traceback.format_exc()), sourcetype='log4j', host='controller'))
+                            + traceback.format_exc(), sourcetype='log4j', host='controller')
 
         #Consider here performing a clean exit; then configure the script to respawn if it dies?
 
@@ -117,9 +115,9 @@ def build_post_request():
         #storm.send('Data dictionary created:' + str(to_post["update"]), sourcetype = 'syslog', host = 'controller')
         #storm.send("Successfully built post request", sourcetype = 'syslog', host = 'controller')
     except:
-        storm.send("ERROR Problem while building post request.",
+        storm.send("ERROR Problem while building post request."
                             + "\n Traceback:"
-                            + traceback.format_exc()), sourcetype='log4j', host='controller'))
+                            + traceback.format_exc(), sourcetype='log4j', host='controller')
     return to_post
 
 
@@ -138,7 +136,7 @@ def send_post_request(post_request):
     except urllib2.HTTPError, error:
         storm.send('ERROR occurred while attempting to post an update to the web service'
                             + "\n Traceback:"
-                            + traceback.format_exc()), sourcetype='log4j', host='controller'))
+                            + traceback.format_exc(), sourcetype='log4j', host='controller')
         contents = error
         contents.read()
 
