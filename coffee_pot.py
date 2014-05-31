@@ -27,7 +27,7 @@ class coffee_pot:
 
     def add_reading(self, value):
         """adds a reading to self.values, and removes the oldest."""
-        
+
         """RB: Before adding the new value, filter it?
         ZD: We don't really need to filter it, because it is filtered by the data controller."""
         self.values.pop(0)
@@ -36,12 +36,12 @@ class coffee_pot:
             storm.send("New Brew!", sourcetype = 'syslog', host = self.name)
             self.lastbrew = time.time()
             self.write_last_brew()
-        
+
         self.removed = value < self.off
-        
 
 
-		
+
+
     """This doesn't look like it will work for a few reasons
     1) value comparisons (against self.full and self.off should be ranged or approximate; if full = 200 and sensor reads 195, isnt that full?
     2) consider how often this function will be called and what happens as we're reading values off one second at a time; couple that with the nature of analog circuits...
@@ -59,12 +59,12 @@ class coffee_pot:
 
     """Zach's responses
     1) self.full should be used as a minimum value.  The range is essentially anything greater than self.full.
-    2) a) this whole system is relying on accurate measurements.  It relies on self.off being absolute, as well as self.full.  
-    If we are going to implement any kind of leniency, than a large part of the system would need to change, and we may need to 
+    2) a) this whole system is relying on accurate measurements.  It relies on self.off being absolute, as well as self.full.
+    If we are going to implement any kind of leniency, than a large part of the system would need to change, and we may need to
     reframe the entire measurement methodology.
-    3) as for using bias values, it seems to me that in this sort of system, we would want to use absolute minimums or maximums.  
-    For instance, we know that x is the lightest it weighs when full, so anything above x is full, not anything within a range of x.  
-    I think we should either wait for the more accurate scales to be in place, and use absolutes, or develop a reliable way of getting 
+    3) as for using bias values, it seems to me that in this sort of system, we would want to use absolute minimums or maximums.
+    For instance, we know that x is the lightest it weighs when full, so anything above x is full, not anything within a range of x.
+    I think we should either wait for the more accurate scales to be in place, and use absolutes, or develop a reliable way of getting
     accurate levels from an inaccurate scale."""
 
     def get_post_value(self):
@@ -73,7 +73,7 @@ class coffee_pot:
             """this responds with the current level of the pot, in a range from 0-1.  It averages the readings in readings."""
             #storm.send("getting value to post.", sourcetype = syslog, host = self.name)
             temp_current_level = float(reduce(lambda x, y: x + y, self.values) / float(len(self.values)))
-            
+
             self.postvalue = float((float(temp_current_level - self.empty)) / (float(int(self.max) - self.empty)))
 
             self.postvalue = min(self.postvalue, 1)
@@ -86,10 +86,10 @@ class coffee_pot:
 
 
     def get_last_brew(self):
-        """getLastBrew checks to see if self.file exists, and if it does, reads out the first line. 
-        I didn't think we needed to check the contents, because nothing extra could end up 
+        """getLastBrew checks to see if self.file exists, and if it does, reads out the first line.
+        I didn't think we needed to check the contents, because nothing extra could end up
         there, and when we write to the file, we us w+ which deletes the content anyway."""
-        
+
         #storm.send(self.name + " is getting an initial value for its last brew time.", sourcetype = 'sysact', host = self.name)
         try:
             if os.path.exists("./" + self.file):
@@ -104,11 +104,11 @@ class coffee_pot:
         except:
             storm.send("ERROR occured when setting initial last brew time for" + self.name, sourcetype = 'sysact', host = self.name)
 
- 
+
     def write_last_brew(self):
         """write_last_brew either opens the existing self.file, deletes the contents and writes time.time()
         or it creates the file """
-        
+
         #storm.send(("writing last brew for %s to %s", self.name, self.file), sourcetype = 'sysact', host = self.name)
         try:
             last_brew_file = open(self.file, 'w+')

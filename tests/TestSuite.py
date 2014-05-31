@@ -12,4 +12,3 @@ from coffeepi_controller_test_suite import *
 
 if __name__ == '__main__':
 	unittest.main()
-	
